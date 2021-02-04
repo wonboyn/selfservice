@@ -1,0 +1,32 @@
+
+# Dot Net
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Miscellaneous
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Terraform
+/.terraform/*
+*.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+
+# VS Code
+.vscode
