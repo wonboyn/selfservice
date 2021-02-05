@@ -24,6 +24,7 @@ msbuild.wrn
 
 # Terraform
 /.terraform/*
+.terraform.lock*
 *.terraform/
 terraform.tfstate
 terraform.tfstate.backup
