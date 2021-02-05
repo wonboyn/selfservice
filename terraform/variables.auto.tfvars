@@ -20,10 +20,10 @@ aws_resource_tags = {
 # Root bot variables
 ###
 root_bot_cloudwatch_log_retention = "14"
-root_bot_lambda_function_desc = "Self Service Bot"
+root_bot_lambda_function_desc = "Self Service Root Bot"
 root_bot_lambda_function_handler = "SelfService::RootBot.LambdaEntryPoint::FunctionHandlerAsync"
 root_bot_lambda_function_memory = "128"
-root_bot_lambda_function_name = "Self Service Root Bot"
+root_bot_lambda_function_name = "SelfServiceRootBot"
 root_bot_lambda_function_timeout = "30"
 root_bot_lambda_source_s3_bucket_name = ""
 root_bot_lambda_source_s3_key = ""
