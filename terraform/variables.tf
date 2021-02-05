@@ -50,14 +50,10 @@ variable "root_bot_lambda_function_name" {
   type = string
 }
 
-variable "root_bot_lambda_function_role" {
-  description = "The IAM role for the lambda function"
-  type = string
-}
-
 variable "root_bot_lambda_function_runtime" {
   description = "The runtime type for the lambda function"
   type = string
+  default = "dotnetcore3.1"
 }
 
 variable "root_bot_lambda_function_tags" {

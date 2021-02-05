@@ -10,7 +10,7 @@
 resource "aws_lambda_function" "root_bot_lambda_function" {
    function_name    = var.root_bot_lambda_function_name
    description      = var.root_bot_lambda_function_desc
-   role             = var.root_bot_lambda_function_role
+   role             = aws_iam_role.root_bot_lambda_role.arn
    handler          = var.root_bot_lambda_function_handler
    runtime          = var.root_bot_lambda_function_runtime
    memory_size      = var.root_bot_lambda_function_memory
@@ -31,7 +31,8 @@ resource "aws_lambda_function" "root_bot_lambda_function" {
 ###
 # Root Bot Cloudwatch logs definition
 ###
-resource "aws_cloudwatch_log_group" "lambda_service_logs" {
+resource "aws_cloudwatch_log_group" "root_bot_lambda_logs" {
    name              = "/aws/lambda/${aws_lambda_function.root_bot_lambda_function.function_name}"
    retention_in_days = var.root_bot_cloudwatch_log_retention
+   tags              = var.aws_resource_tags
 }
