@@ -34,8 +34,11 @@ resource "aws_lambda_function" "root_bot_lambda_function" {
 ###
 # Root Bot CloudWatch logs definition
 ###
-resource "aws_cloudwatch_log_group" "root_bot_lambda_logs" {
+resource "aws_cloudwatch_log_group" "root_bot_lambda_cloudwatch_log_group" {
    name              = "/aws/lambda/${aws_lambda_function.root_bot_lambda_function.function_name}"
    retention_in_days = var.root_bot_cloudwatch_log_retention
-   tags              = var.aws_resource_tags
+   tags              = merge(
+                        var.aws_resource_tags, 
+                        var.root_bot_lambda_function_tags,
+                        map("environment", var.aws_environment))
 }

@@ -31,6 +31,11 @@ variable "aws_resource_tags" {
 ###
 # API gateway variables
 ###
+variable "api_gateway_selfservice_cloudwatch_log_retention" {
+  description = "The retention period for the API Gateway logs"
+  type        = number
+}
+
 variable "api_gateway_selfservice_name" {
   description = "Name of the Self Service API Gateway REST endpoint"
   type        = string
@@ -39,6 +44,12 @@ variable "api_gateway_selfservice_name" {
 variable "api_gateway_selfservice_desc" {
   description = "The description for the Self Service API Gateway REST endpoint"
   type        = string
+}
+
+variable "api_gateway_selfservice_tags" {
+  description = "Tags to apply to the Self Service API Gateway"
+  type        = map(string)
+  default     = {}
 }
 
 

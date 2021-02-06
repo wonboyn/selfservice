@@ -19,6 +19,7 @@ aws_resource_tags   = {
 ###
 # API gateway variables
 ###
+api_gateway_selfservice_cloudwatch_log_retention = "14"
 api_gateway_selfservice_name = "SelfService"
 api_gateway_selfservice_desc = "Slack Self Service API"
 

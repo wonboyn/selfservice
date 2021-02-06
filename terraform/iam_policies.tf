@@ -52,22 +52,22 @@ resource "aws_iam_policy" "cloudwatch_log_group_create_policy" {
 ###
 # Policy granting permission to modify CloudWatch logs to Self Service API Gateway
 ###
-data "aws_iam_policy_document" "modify_root_bot_lambda_log_policy_doc" {
+data "aws_iam_policy_document" "modify_self_service_api_gateway_log_policy_doc" {
   statement {
     actions = [
        "logs:CreateLogStream",
        "logs:PutLogEvents"
     ]
     resources = [
-        aws_cloudwatch_log_group.root_bot_lambda_logs.arn
+        aws_cloudwatch_log_group.api_gateway_cloudwatch_log_group.arn
     ]
   }
 }
 
-resource "aws_iam_policy" "cloudwatch_log_root_bot_lambda_modify_policy" {
-  name        = "SelfService_Modify_RootBot_Log_Policy"
-  description = "Policy granting modify access for Root Bot Lambda CloudWatch Logs"
-  policy      = data.aws_iam_policy_document.modify_root_bot_lambda_log_policy_doc.json
+resource "aws_iam_policy" "cloudwatch_log_self_service_api_gateway_modify_policy" {
+  name        = "SelfService_Modify_APIGateway_Log_Policy"
+  description = "Policy granting modify access for Self Service API Gateway CloudWatch Logs"
+  policy      = data.aws_iam_policy_document.modify_self_service_api_gateway_log_policy_doc.json
 }
 
 
@@ -81,7 +81,7 @@ data "aws_iam_policy_document" "modify_root_bot_lambda_log_policy_doc" {
        "logs:PutLogEvents"
     ]
     resources = [
-        aws_cloudwatch_log_group.root_bot_lambda_logs.arn
+        aws_cloudwatch_log_group.root_bot_lambda_cloudwatch_log_group.arn
     ]
   }
 }
