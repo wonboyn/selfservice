@@ -29,7 +29,7 @@ resource "aws_api_gateway_rest_api" "api_gateway" {
 # API Gateway CloudWatch ARN
 ###
 resource "aws_api_gateway_account" "api_gw_account" {
-  cloudwatch_role_arn = aws_iam_role.cloudwatch.arn
+  cloudwatch_role_arn = aws_iam_role.self_service_api_gateway_role.arn
 }
 
 

@@ -15,9 +15,12 @@ resource "aws_lambda_function" "root_bot_lambda_function" {
    runtime          = var.root_bot_lambda_function_runtime
    memory_size      = var.root_bot_lambda_function_memory
    timeout          = var.root_bot_lambda_function_timeout
-   tags             = merge(var.aws_resource_tags, var.root_bot_lambda_function_tags)
    s3_bucket        = var.root_bot_lambda_source_s3_bucket_name
    s3_key           = var.root_bot_lambda_source_s3_key
+   tags             = merge(
+                       var.aws_resource_tags, 
+                       var.root_bot_lambda_function_tags,
+                       map("environment", var.aws_environment))
 
    dynamic "environment" {
       for_each = length(keys(var.root_bot_lambda_function_vars)) == 0 ? [] : [true]
@@ -29,7 +32,7 @@ resource "aws_lambda_function" "root_bot_lambda_function" {
 
 
 ###
-# Root Bot Cloudwatch logs definition
+# Root Bot CloudWatch logs definition
 ###
 resource "aws_cloudwatch_log_group" "root_bot_lambda_logs" {
    name              = "/aws/lambda/${aws_lambda_function.root_bot_lambda_function.function_name}"

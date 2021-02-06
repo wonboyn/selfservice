@@ -5,7 +5,7 @@
 # ------------------
 
 ###
-# Policy granting read access to the Skills table
+# Policy granting permission to read the Dynamo DB Skills table
 ###
 data "aws_iam_policy_document" "skills_read_policy_doc" {
   statement {
@@ -29,7 +29,7 @@ resource "aws_iam_policy" "dynamodb_skills_table_read_policy" {
 
 
 ###
-# Policy granting create log group access
+# Policy granting permission to create log groups
 ###
 data "aws_iam_policy_document" "create_loggroup_policy_doc" {
   statement {
@@ -50,7 +50,29 @@ resource "aws_iam_policy" "cloudwatch_log_group_create_policy" {
 
 
 ###
-# Policy granting update Root Bot Lambda CloudWatch log access
+# Policy granting permission to modify CloudWatch logs to Self Service API Gateway
+###
+data "aws_iam_policy_document" "modify_root_bot_lambda_log_policy_doc" {
+  statement {
+    actions = [
+       "logs:CreateLogStream",
+       "logs:PutLogEvents"
+    ]
+    resources = [
+        aws_cloudwatch_log_group.root_bot_lambda_logs.arn
+    ]
+  }
+}
+
+resource "aws_iam_policy" "cloudwatch_log_root_bot_lambda_modify_policy" {
+  name        = "SelfService_Modify_RootBot_Log_Policy"
+  description = "Policy granting modify access for Root Bot Lambda CloudWatch Logs"
+  policy      = data.aws_iam_policy_document.modify_root_bot_lambda_log_policy_doc.json
+}
+
+
+###
+# Policy granting permission to modify CloudWatch logs to Root Bot Lambda 
 ###
 data "aws_iam_policy_document" "modify_root_bot_lambda_log_policy_doc" {
   statement {
