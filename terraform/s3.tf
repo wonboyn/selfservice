@@ -4,7 +4,7 @@
 #
 # ---------------------
 
-##
+###
 # S3 Bucket for Lambda source
 ###
 resource "aws_s3_bucket" "s3_bucket_lambda_source" {

@@ -4,7 +4,7 @@
 #
 # ---------------------
 
-##
+###
 # Root Bot Lambda definition
 ###
 resource "aws_lambda_function" "root_bot_lambda_function" {

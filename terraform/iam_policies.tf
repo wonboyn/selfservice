@@ -4,7 +4,7 @@
 #
 # ------------------
 
-##
+###
 # Policy granting read access to the Skills table
 ###
 data "aws_iam_policy_document" "skills_read_policy_doc" {
@@ -28,7 +28,7 @@ resource "aws_iam_policy" "dynamodb_skills_table_read_policy" {
 }
 
 
-##
+###
 # Policy granting create log group access
 ###
 data "aws_iam_policy_document" "create_loggroup_policy_doc" {
@@ -49,7 +49,7 @@ resource "aws_iam_policy" "cloudwatch_log_group_create_policy" {
 }
 
 
-##
+###
 # Policy granting update Root Bot Lambda CloudWatch log access
 ###
 data "aws_iam_policy_document" "modify_root_bot_lambda_log_policy_doc" {

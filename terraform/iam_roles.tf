@@ -4,7 +4,7 @@
 #
 # ------------------
 
-##
+###
 # Role for Self Service Root Bot Lambda
 ###
 resource "aws_iam_role" "root_bot_lambda_role" {

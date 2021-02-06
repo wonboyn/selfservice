@@ -4,7 +4,7 @@
 #
 # ----------------------
 
-##
+###
 # Skills table
 ###
 resource "aws_dynamodb_table" "skills_table" {
@@ -12,7 +12,10 @@ resource "aws_dynamodb_table" "skills_table" {
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "category"
   range_key      = "name"
-  tags           = merge(var.aws_resource_tags, var.dynamodb_skills_table_tags)
+  tags           = merge(
+                     var.aws_resource_tags, 
+                     var.dynamodb_skills_table_tags,
+                     map("environment", var.aws_environment))
 
   attribute {
     name = "category"

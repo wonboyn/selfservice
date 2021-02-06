@@ -4,7 +4,7 @@
 #
 # ----------------------
 
-##
+###
 # Swagger definition for API Gateway
 ###
 data "template_file" api_swagger {
@@ -15,17 +15,17 @@ data "template_file" api_swagger {
 }
 
 
-##
+###
 # API Gateway Definition
 ###
 resource "aws_api_gateway_rest_api" "api_gateway" {
-  name        = "SelfService"
-  description = "Slack Self Service API"
+  name        = var.api_gateway_selfservice_name
+  description = var.api_gateway_selfservice_desc
   body        = data.template_file.api_swagger.rendered
 }
 
 
-##
+###
 # API Gateway CloudWatch ARN
 ###
 resource "aws_api_gateway_account" "api_gw_account" {
@@ -33,10 +33,10 @@ resource "aws_api_gateway_account" "api_gw_account" {
 }
 
 
-##
-# API Gateway CloudWatch ARN
+###
+# API Gateway Deployment
 ###
 resource "aws_api_gateway_deployment" "api_gateway_deployment" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  stage_name  = var.environment
+  stage_name  = var.aws_environment
 }
