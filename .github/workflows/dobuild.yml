@@ -65,7 +65,7 @@ jobs:
     - name: Perform build
       run: |
         dotnet build --configuration ${{ env.config }} --no-restore ${{ env.src-project }} -o ${{ env.build-dir }}
-        ls -al ${{ env.out-dir }}
+        ls -al ${{ env.build-dir }}
         
     # Run CodeQL analysis
     - name: Perform CodeQL Analysis
