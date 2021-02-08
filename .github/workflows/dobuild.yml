@@ -28,8 +28,9 @@ jobs:
     # Variables for the build job
     env:
       config: 'Release'
-      out-dir: '${{ github.workspace }}/out'
-      src-dir: '${{ github.workspace }}/src'
+      build-dir: '${{ github.workspace }}/build'
+      src-project: '${{ github.workspace }}/code/src/RootBot/RootBot.csproj'
+      test-project: '${{ github.workspace }}/code/test/RootBot.Tests/RootBot.Tests.csproj'
     
     # Build steps
     steps:
@@ -51,7 +52,8 @@ jobs:
     # Install all the dependencies
     - name: Install dependencies
       run: |
-        dotnet restore
+        dotnet restore ${{ env.src-project }}
+        dotnet restore ${{ env.test-project }}
 
     # Setup CodeQL
     - name: Initialize CodeQL
@@ -62,7 +64,7 @@ jobs:
     # Run DotNet build 
     - name: Perform build
       run: |
-        dotnet build --configuration ${{ env.config }} --no-restore ${{ env.src-dir }} -o ${{ env.out-dir }}
+        dotnet build --configuration ${{ env.config }} --no-restore ${{ env.src-project }} -o ${{ env.build-dir }}
         ls -al ${{ env.out-dir }}
         
     # Run CodeQL analysis
