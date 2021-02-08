@@ -4,14 +4,11 @@
 # It performs the following tasks:
 #
 #    - log the git branch/commit details
-#    - install Go v1.15
-#    - run go vet/lint
-#    - install CodeQL
+#    - install DotNet Core v3.1
+#    - install dependencies
+#    - initialize CodeQL
 #    - compile the code
 #    - run CodeQL analysis
-#    - tar the compiled binary
-#    - run any go test cases
-#    - upload the tar file as a workflow artefact
 #
 #######################################################
 
@@ -29,8 +26,8 @@ jobs:
     env:
       config: 'Release'
       build-dir: '${{ github.workspace }}/build'
-      src-project: '${{ github.workspace }}/code/src/RootBot/RootBot.csproj'
-      test-project: '${{ github.workspace }}/code/test/RootBot.Tests/RootBot.Tests.csproj'
+      src-project: '${{ github.workspace }}/selfservicebot/src/SelfServiceBot.csproj'
+      test-project: '${{ github.workspace }}/selfservicebot/test/SelfServiceBot.Tests.csproj'
     
     # Build steps
     steps:
@@ -55,7 +52,7 @@ jobs:
         dotnet restore ${{ env.src-project }}
         dotnet restore ${{ env.test-project }}
 
-    # Setup CodeQL
+    # Initialize CodeQL
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
       with:
@@ -65,7 +62,7 @@ jobs:
     - name: Perform build
       run: |
         dotnet build --configuration ${{ env.config }} --no-restore ${{ env.src-project }} -o ${{ env.build-dir }}
-        ls -al ${{ env.out-dir }}
+        ls -al ${{ env.build-dir }}
         
     # Run CodeQL analysis
     - name: Perform CodeQL Analysis
