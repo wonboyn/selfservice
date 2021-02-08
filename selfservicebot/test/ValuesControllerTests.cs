@@ -1,3 +1,9 @@
+using Amazon.Lambda.Core;
+using Amazon.Lambda.TestUtilities;
+using Amazon.Lambda.APIGatewayEvents;
+
+using Newtonsoft.Json;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,16 +11,11 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using Xunit;
-using Amazon.Lambda.Core;
-using Amazon.Lambda.TestUtilities;
-using Amazon.Lambda.APIGatewayEvents;
 
-using Newtonsoft.Json;
-
-using RootBot;
+using SelfService;
 
 
-namespace RootBot.Tests
+namespace SelfService.Tests
 {
     public class ValuesControllerTests
     {
