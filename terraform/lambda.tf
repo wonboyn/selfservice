@@ -5,6 +5,34 @@
 # ---------------------
 
 ###
+# Dummy source for tha lambda creation
+###
+data "archive_file" "root_bot_lambda_source_zip" {
+   type        = "zip"
+   output_path = "${path.module}/root_bot_lambda_source.zip"
+
+   source {
+      content  = "hello world"
+      filename = "dummy.txt"
+   }
+}
+
+
+###
+# Upload source zip to S3
+###
+resource "aws_s3_bucket_object" "s3_root_bot_lambda_source_zip" {
+   bucket    = aws_s3_bucket.s3_bucket_lambda_source.id
+   key       = var.root_bot_lambda_source_s3_key
+   source    = data.archive_file.root_bot_lambda_source_zip.output_path
+   tags      = merge(
+                  var.aws_resource_tags, 
+                  var.root_bot_lambda_function_tags,
+                  map("environment", var.aws_environment))
+}
+
+
+###
 # Root Bot Lambda definition
 ###
 resource "aws_lambda_function" "root_bot_lambda_function" {
@@ -15,8 +43,8 @@ resource "aws_lambda_function" "root_bot_lambda_function" {
    runtime          = var.root_bot_lambda_function_runtime
    memory_size      = var.root_bot_lambda_function_memory
    timeout          = var.root_bot_lambda_function_timeout
-   s3_bucket        = var.root_bot_lambda_source_s3_bucket_name
-   s3_key           = var.root_bot_lambda_source_s3_key
+   s3_bucket        = aws_s3_bucket.s3_bucket_lambda_source.id
+   s3_key           = aws_s3_bucket_object.s3_root_bot_lambda_source_zip.key
    tags             = merge(
                        var.aws_resource_tags, 
                        var.root_bot_lambda_function_tags,

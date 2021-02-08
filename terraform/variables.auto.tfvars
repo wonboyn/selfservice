@@ -39,5 +39,5 @@ root_bot_lambda_function_handler      = "SelfService::RootBot.LambdaEntryPoint::
 root_bot_lambda_function_memory       = "128"
 root_bot_lambda_function_name         = "SelfServiceRootBot"
 root_bot_lambda_function_timeout      = "30"
-root_bot_lambda_source_s3_bucket_name = ""
-root_bot_lambda_source_s3_key         = ""
+root_bot_lambda_source_s3_bucket_name = "SelfServiceLambdas"
+root_bot_lambda_source_s3_key         = "lambdas/rootbot.zip"
