@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace SelfService
@@ -16,6 +17,14 @@ namespace SelfService
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+
+                // Add AWS Secrets Manager Configuration provider to
+                // load secrets into the configuration object.
+                // See https://github.com/Kralizek/AWSSecretsManagerConfigurationExtensions
+                .ConfigureAppConfiguration((context, builder) =>
+                {
+                    builder.AddSecretsManager();
                 });
     }
 }
