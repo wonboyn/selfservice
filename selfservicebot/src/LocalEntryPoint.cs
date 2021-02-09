@@ -3,9 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace SelfService
 {
-    /// <summary>
-    /// The Main function can be used to run the ASP.NET Core application locally using the Kestrel webserver.
-    /// </summary>
+    // This class is only used for local testing.
     public class LocalEntryPoint
     {
         public static void Main(string[] args)
