@@ -1,25 +1,18 @@
-using Amazon.Lambda.Core;
 using Amazon.Lambda.TestUtilities;
 using Amazon.Lambda.APIGatewayEvents;
 
 using Newtonsoft.Json;
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Xunit;
-
-using SelfService;
 
 
 namespace SelfService.Tests
 {
     public class ValuesControllerTests
     {
-
 
         [Fact]
         public async Task TestGet()

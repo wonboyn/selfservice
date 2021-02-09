@@ -50,7 +50,6 @@ jobs:
     - name: Install dependencies
       run: |
         dotnet restore ${{ env.src-project }}
-        dotnet restore ${{ env.test-project }}
 
     # Initialize CodeQL
     - name: Initialize CodeQL

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +19,8 @@ namespace SelfService
 
         public static IConfiguration Configuration { get; private set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container
+
+        // Setup services to be injected
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
@@ -32,7 +32,8 @@ namespace SelfService
             services.AddTransient<IBot, SelfServiceBot>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
+
+        // Configure the web environment
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
