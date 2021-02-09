@@ -12,7 +12,7 @@
 #
 #######################################################
 
-name: Perform build
+name: Perform build & test
 on: 
   push:
     branches:
@@ -31,14 +31,17 @@ jobs:
     
     # Build steps
     steps:
-    - uses: actions/checkout@v2
+    - name: Setup Git Checkout
+      uses: actions/checkout@v2
     
     # Log basic info
-    - name: Log git event info
+    - name: Log Info
       run: |
         echo Event: ${{ github.event_name }}
         echo Git Ref: ${{ github.ref }}
         echo Git SHA: ${{ github.sha }}
+        ls -al ${{ env.src-project }}
+        ls -al ${{ env.test-project }}
     
     # Setup DotNet Core
     - name: Setup DotNet
