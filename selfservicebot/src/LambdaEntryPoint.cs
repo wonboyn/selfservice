@@ -1,10 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace SelfService
 {
     // This class provides the Lambda entrypoint
