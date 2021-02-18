@@ -56,11 +56,13 @@ data "aws_iam_policy_document" "modify_self_service_api_gateway_log_policy_doc" 
   statement {
     actions = [
        "logs:CreateLogStream",
+       "logs:DescribeLogGroups",
+       "logs:DescribeLogStreams",
+       "logs:GetLogEvents",
+       "logs:FilterLogEvents",
        "logs:PutLogEvents"
     ]
-    resources = [
-        aws_cloudwatch_log_group.api_gateway_cloudwatch_log_group.arn
-    ]
+    resources = [ "*" ]
   }
 }
 
