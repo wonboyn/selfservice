@@ -19,9 +19,12 @@ data "template_file" api_swagger {
 # API Gateway Definition
 ###
 resource "aws_api_gateway_rest_api" "self_service_api_gateway" {
-  name        = var.api_gateway_selfservice_name
-  description = var.api_gateway_selfservice_desc
-  body        = data.template_file.api_swagger.rendered
+  name          = var.api_gateway_selfservice_name
+  description   = var.api_gateway_selfservice_desc
+  body          = data.template_file.api_swagger.rendered
+  endpoint_configuration {
+    types = [var.api_gateway_selfservice_endpoint_type] 
+  }
 }
 
 
