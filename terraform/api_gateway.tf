@@ -31,8 +31,8 @@ resource "aws_api_gateway_rest_api" "self_service_api_gateway" {
 ###
 # API Gateway CloudWatch logs definition
 ###
-resource "aws_cloudwatch_log_group" "api_gateway_cloudwatch_log_group" {
-   name              = "/aws/apigateway/${aws_api_gateway_rest_api.self_service_api_gateway.id}"
+resource "aws_cloudwatch_log_group" "self_service_api_gateway_cloudwatch_log_group" {
+   name              = "/aws/apigateway/${aws_api_gateway_rest_api.self_service_api_gateway.name}"
    retention_in_days = var.api_gateway_selfservice_cloudwatch_log_retention
    tags              = merge(
                         var.aws_resource_tags, 
@@ -44,7 +44,7 @@ resource "aws_cloudwatch_log_group" "api_gateway_cloudwatch_log_group" {
 ###
 # API Gateway CloudWatch ARN
 ###
-resource "aws_api_gateway_account" "api_gateway_account" {
+resource "aws_api_gateway_account" "self_service_api_gateway_account" {
   cloudwatch_role_arn = aws_iam_role.self_service_api_gateway_role.arn
 }
 
@@ -61,7 +61,7 @@ resource "aws_api_gateway_deployment" "self_service_api_gateway_deployment" {
 ###
 # API Gateway Stage
 ###
-resource "aws_api_gateway_stage" "example" {
+resource "aws_api_gateway_stage" "self_service_api_gateway_stage" {
   deployment_id = aws_api_gateway_deployment.self_service_api_gateway_deployment.id
   rest_api_id   = aws_api_gateway_rest_api.self_service_api_gateway.id
   stage_name    = var.aws_environment
