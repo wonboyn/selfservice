@@ -20,8 +20,9 @@ aws_resource_tags   = {
 # API gateway variables
 ###
 api_gateway_selfservice_cloudwatch_log_retention = "14"
-api_gateway_selfservice_name = "SelfService"
-api_gateway_selfservice_desc = "Slack Self Service API"
+api_gateway_selfservice_endpoint_type            = "REGIONAL"
+api_gateway_selfservice_name                     = "SelfService"
+api_gateway_selfservice_desc                     = "Slack Self Service API"
 
 
 ###
@@ -39,5 +40,5 @@ root_bot_lambda_function_handler      = "SelfService::RootBot.LambdaEntryPoint::
 root_bot_lambda_function_memory       = "128"
 root_bot_lambda_function_name         = "SelfServiceRootBot"
 root_bot_lambda_function_timeout      = "30"
-root_bot_lambda_source_s3_bucket_name = "SelfServiceLambdas"
-root_bot_lambda_source_s3_key         = "lambdas/rootbot.zip"
+root_bot_lambda_source_s3_bucket_name = "fred123lambdas"
+root_bot_lambda_source_s3_key         = "rootbot/rootbot.zip"

@@ -45,7 +45,7 @@ data "aws_iam_policy_document" "create_loggroup_policy_doc" {
 resource "aws_iam_policy" "cloudwatch_log_group_create_policy" {
   name        = "SelfService_LogGroup_Create_Policy"
   description = "Policy granting create access for CloudWatch Log Groups"
-  policy      = data.aws_iam_policy_document.skills_read_policy_doc.json
+  policy      = data.aws_iam_policy_document.create_loggroup_policy_doc.json
 }
 
 

@@ -36,6 +36,11 @@ variable "api_gateway_selfservice_cloudwatch_log_retention" {
   type        = number
 }
 
+variable "api_gateway_selfservice_endpoint_type" {
+  description = "The Self Service API Gateway REST endpoint type (Edge or Regional)"
+  type        = string
+}
+
 variable "api_gateway_selfservice_name" {
   description = "Name of the Self Service API Gateway REST endpoint"
   type        = string
