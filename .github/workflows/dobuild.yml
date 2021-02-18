@@ -26,7 +26,7 @@ jobs:
     env:
       config: 'Release'
       dir-build: '${{ github.workspace }}/build'
-      dir-src-project: '${{ github.workspace }}/selfservicebot/src/'
+      dir-src-project: '${{ github.workspace }}/selfservicebot/src'
       dir-test-project: '${{ github.workspace }}/selfservicebot/test'
       file-src-project: 'SelfServiceBot.csproj'
       file-test-project: 'SelfServiceBot.Tests.csproj'
@@ -42,7 +42,9 @@ jobs:
         echo Event: ${{ github.event_name }}
         echo Git Ref: ${{ github.ref }}
         echo Git SHA: ${{ github.sha }}
+        echo 'Source directory:'
         ls -al ${{ env.dir-src-project }}
+        echo 'Test directory:'
         ls -al ${{ env.dir-test-project }}
     
     # Setup DotNet Core
@@ -66,7 +68,8 @@ jobs:
     - name: Perform build
       run: |
         dotnet build --configuration ${{ env.config }} --no-restore '${{ env.dir-src-project }}/${{ env.file-src-project }}' -o ${{ env.dir-build }}
-        ls -al ${{ env.build-dir }}
+        echo 'Build directory:'
+        ls -al ${{ env.dir-build }}
         
     # Run CodeQL analysis
     - name: Perform CodeQL Analysis
