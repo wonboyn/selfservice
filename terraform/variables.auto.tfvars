@@ -22,7 +22,7 @@ aws_resource_tags   = {
 api_gateway_selfservice_cloudwatch_log_retention = "14"
 api_gateway_selfservice_endpoint_type            = "REGIONAL"
 api_gateway_selfservice_name                     = "SelfService"
-api_gateway_selfservice_desc                     = "Slack Self Service API"
+api_gateway_selfservice_desc                     = "Self Service API Gateway"
 
 
 ###

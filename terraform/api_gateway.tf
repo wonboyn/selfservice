@@ -44,7 +44,7 @@ resource "aws_cloudwatch_log_group" "api_gateway_cloudwatch_log_group" {
 ###
 # API Gateway CloudWatch ARN
 ###
-resource "aws_api_gateway_account" "api_gateway_role" {
+resource "aws_api_gateway_account" "api_gateway_account" {
   cloudwatch_role_arn = aws_iam_role.self_service_api_gateway_role.arn
 }
 
@@ -52,7 +52,17 @@ resource "aws_api_gateway_account" "api_gateway_role" {
 ###
 # API Gateway Deployment
 ###
-resource "aws_api_gateway_deployment" "api_gateway_deployment" {
+resource "aws_api_gateway_deployment" "self_service_api_gateway_deployment" {
   rest_api_id = aws_api_gateway_rest_api.self_service_api_gateway.id
-  stage_name  = var.aws_environment
+  description = "Terraform deployment"
+}
+
+
+###
+# API Gateway Stage
+###
+resource "aws_api_gateway_stage" "example" {
+  deployment_id = aws_api_gateway_deployment.self_service_api_gateway_deployment.id
+  rest_api_id   = aws_api_gateway_rest_api.self_service_api_gateway.id
+  stage_name    = var.aws_environment
 }
