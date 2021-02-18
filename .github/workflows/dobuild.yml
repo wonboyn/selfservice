@@ -25,11 +25,11 @@ jobs:
     # Variables for the build job
     env:
       config: 'Release'
-      build-dir: '${{ github.workspace }}/build'
-      src-project-dir: '${{ github.workspace }}/selfservicebot/src/'
-      src-project-file: '${{ env.src-project-dir }}/SelfServiceBot.csproj'
-      test-project-dir: '${{ github.workspace }}/selfservicebot/test'
-      test-project-file: '${{ env.test-project-dir }}/SelfServiceBot.Tests.csproj'
+      dir-build: '${{ github.workspace }}/build'
+      dir-src-project: '${{ github.workspace }}/selfservicebot/src/'
+      dir-test-project: '${{ github.workspace }}/selfservicebot/test'
+      file-src-project: 'SelfServiceBot.csproj'
+      file-test-project: 'SelfServiceBot.Tests.csproj'
     
     # Build steps
     steps:
@@ -42,8 +42,8 @@ jobs:
         echo Event: ${{ github.event_name }}
         echo Git Ref: ${{ github.ref }}
         echo Git SHA: ${{ github.sha }}
-        ls -al ${{ env.src-project-dir }}
-        ls -al ${{ env.test-project-dir }}
+        ls -al ${{ env.dir-src-project }}
+        ls -al ${{ env.dir-test-project }}
     
     # Setup DotNet Core
     - name: Setup DotNet
@@ -54,7 +54,7 @@ jobs:
     # Install all the dependencies
     - name: Install dependencies
       run: |
-        dotnet restore ${{ env.src-project-file }}
+        dotnet restore '${{ env.dir-src-project }}/${{ env.file-src-project }}'
 
     # Initialize CodeQL
     - name: Initialize CodeQL
@@ -65,7 +65,7 @@ jobs:
     # Run DotNet build 
     - name: Perform build
       run: |
-        dotnet build --configuration ${{ env.config }} --no-restore ${{ env.src-project }} -o ${{ env.build-dir }}
+        dotnet build --configuration ${{ env.config }} --no-restore '${{ env.dir-src-project }}/${{ env.file-src-project }}' -o ${{ env.dir-build }}
         ls -al ${{ env.build-dir }}
         
     # Run CodeQL analysis
