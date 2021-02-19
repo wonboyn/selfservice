@@ -22,7 +22,7 @@ terraform {
 
   # Terraform state
   backend "local" {
-    path = "../tfstate/aws.tfstate"
+    path = "../tfstate/azure.tfstate"
   }
 }
 
@@ -32,4 +32,15 @@ terraform {
 ###
 provider "azurerm" {
   features {}
+}
+
+
+###
+# Import state from AWS phase
+###
+data "terraform_remote_state" "aws_state" {
+  backend = "local" 
+  config = {
+    path    = "../tfstate/aws.tfstate"
+  }
 }
