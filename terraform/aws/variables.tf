@@ -1,8 +1,8 @@
-# ---------------------
+# ------------------------
 #
-# Terraform Variables
+# AWS Terraform Variables
 #
-# ---------------------
+# ------------------------
 
 ###
 # AWS general variables

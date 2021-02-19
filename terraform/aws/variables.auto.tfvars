@@ -1,8 +1,8 @@
-# -----------------------
+# ----------------------------
 #
-# Default variable values
+# Default AWS variable values
 #
-# -----------------------
+# ----------------------------
 
 ###
 # AWS general variables
