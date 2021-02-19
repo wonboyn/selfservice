@@ -26,8 +26,8 @@ msbuild.wrn
 /.terraform/*
 .terraform.lock*
 *.terraform/
-terraform.tfstate
-terraform.tfstate.backup
+*.tfstate
+*.tfstate.backup
 
 # VS Code
 .vscode
