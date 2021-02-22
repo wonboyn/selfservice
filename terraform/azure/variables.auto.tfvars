@@ -17,13 +17,15 @@ azure_resource_tags = {
 
 
 ###
+# App Registration variables
+###
+app_registration_resource_group_name = "SelfService"
+app_registration_name = "Fred"
+
+
+###
 # Bot Registration variables
 ###
 bot_registration_resource_group_name = "SelfService"
 bot_registration_name                = "SelfServiceRootBot"
 bot_registration_sku                 = "F0"
-
-
-###
-# App Registration variables
-###
