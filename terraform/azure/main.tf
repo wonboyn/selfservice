@@ -14,15 +14,15 @@ terraform {
 
   # Required providers
   required_providers {
-      azurerm = {
-      source = "hashicorp/azurerm"
-      version = "=2.46.0"
-    }
+     azurerm = {
+        source = "hashicorp/azurerm"
+        version = "=2.46.0"
+     }
   }
 
   # Terraform state
   backend "local" {
-    path = "../tfstate/azure.tfstate"
+     path = "../tfstate/azure.tfstate"
   }
 }
 
@@ -31,16 +31,16 @@ terraform {
 # Setup Azure provider
 ###
 provider "azurerm" {
-  features {}
+   features {}
 }
 
 
 ###
 # Import state from AWS phase
 ###
-data "terraform_remote_state" "aws_state" {
-  backend = "local" 
-  config = {
-    path    = "../tfstate/aws.tfstate"
-  }
-}
+#data "terraform_remote_state" "aws_state" {
+#  backend = "local" 
+#  config = {
+#    path    = "../tfstate/aws.tfstate"
+#  }
+#}

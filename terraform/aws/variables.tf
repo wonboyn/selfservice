@@ -102,44 +102,44 @@ variable "root_bot_lambda_function_handler" {
 }
 
 variable "root_bot_lambda_function_memory" {
-  description = "The memory limit for the lambda function"
-  type        = number
+   description = "The memory limit for the lambda function"
+   type        = number
 }
 
 variable "root_bot_lambda_function_name" {
-  description = "The name for the lambda function"
-  type        = string
+   description = "The name for the lambda function"
+   type        = string
 }
 
 variable "root_bot_lambda_function_runtime" {
-  description = "The runtime type for the lambda function"
-  type        = string
-  default     = "dotnetcore3.1"
+   description = "The runtime type for the lambda function"
+   type        = string
+   default     = "dotnetcore3.1"
 }
 
 variable "root_bot_lambda_function_tags" {
-  description = "Tags to apply to the lambda function"
-  type        = map(string)
-  default     = {}
+   description = "Tags to apply to the lambda function"
+   type        = map(string)
+   default     = {}
 }
 
 variable "root_bot_lambda_function_timeout" {
-  description = "The timeout for the lambda function"
-  type        = number
+   description = "The timeout for the lambda function"
+   type        = number
 }
 
 variable "root_bot_lambda_function_vars" {
-  description = "Environment variables to apply to the lambda function"
-  type        = map(string)
-  default     = {}
+   description = "Environment variables to apply to the lambda function"
+   type        = map(string)
+   default     = {}
 }
 
 variable "root_bot_lambda_source_s3_bucket_name" {
-  description = "The name of the S3 bucket that has the root bot source zip"
-  type        = string
+   description = "The name of the S3 bucket that has the root bot source zip"
+   type        = string
 }
 
 variable "root_bot_lambda_source_s3_key" {
-  description = "The name of the S3 bucket key that has the root bot source zip"
-  type        = string
+   description = "The name of the S3 bucket key that has the root bot source zip"
+   type        = string
 }
