@@ -39,6 +39,20 @@ variable "azure_tenant_id" {
 
 
 ###
+# App Registration
+###
+variable "app_registration_resource_group_name" {
+   description = "The name of the resource group for the Application registration"
+   type        = string
+}
+
+variable "app_registration_name" {
+   description = "The name for the Application registration"
+   type        = string
+}
+
+
+###
 # Bot Registration
 ###
 variable "bot_registration_resource_group_name" {
