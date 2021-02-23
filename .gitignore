@@ -21,6 +21,7 @@ msbuild.wrn
 .env.development.local
 .env.test.local
 .env.production.local
+*.zip
 
 # Terraform
 /.terraform/*
