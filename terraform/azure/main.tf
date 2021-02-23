@@ -14,11 +14,26 @@ terraform {
 
   # Required providers
   required_providers {
-     azurerm = {
-        source = "hashicorp/azurerm"
-        version = "=2.46.0"
-     }
+ 
+      # Hashicorp Random Provider
+      random = {
+         source = "hashicorp/random"
+         version = "=3.1.0"
+      }
+      
+      # Microsoft Azure Provider
+      azurerm = {
+         source = "hashicorp/azurerm"
+         version = "=2.48.0"
+      }
+
+      # Microsoft Azure Active Directory Provider
+      azuread = {
+         source  = "hashicorp/azuread"
+         version = "=1.4.0"
+      }
   }
+
 
   # Terraform state
   backend "local" {
