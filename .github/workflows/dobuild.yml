@@ -25,11 +25,9 @@ jobs:
     # Variables for the build job
     env:
       config: 'Release'
-      dir-build: '${{ github.workspace }}/build'
-      dir-src-project: '${{ github.workspace }}/selfservicebot/src'
-      dir-test-project: '${{ github.workspace }}/selfservicebot/test'
-      file-src-project: 'SelfServiceBot.csproj'
-      file-test-project: 'SelfServiceBot.Tests.csproj'
+      dir-src: '${{ github.workspace }}/selfservicebot'
+      dir-tests: '${{ github.workspace }}/selfservicebot/tests'
+      file-requirements: '${{ github.workspace }}/requirements.txt'
     
     # Build steps
     steps:
@@ -42,35 +40,31 @@ jobs:
         echo Event: ${{ github.event_name }}
         echo Git Ref: ${{ github.ref }}
         echo Git SHA: ${{ github.sha }}
-        echo 'Source directory:'
-        ls -al ${{ env.dir-src-project }}
-        echo 'Test directory:'
-        ls -al ${{ env.dir-test-project }}
+        echo Source Directory: 
+        ls -al ${{ env.dir-src }}
     
-    # Setup DotNet Core
-    - name: Setup DotNet
-      uses: actions/setup-dotnet@v1
+    # Setup Python
+    - name: Setup Python
+      uses: actions/setup-python@v2
       with:
-        dotnet-version: '3.1.101'
+        python-version: '3.8'
     
-    # Install all the dependencies
-    - name: Install dependencies
-      run: |
-        dotnet restore '${{ env.dir-src-project }}/${{ env.file-src-project }}'
-
+    # Run the tests
+    # TODO!!!
+    
     # Initialize CodeQL
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
       with:
-        languages: csharp
+        languages: python
 
-    # Run DotNet build 
-    - name: Perform build
-      run: |
-        dotnet build --configuration ${{ env.config }} --no-restore '${{ env.dir-src-project }}/${{ env.file-src-project }}' -o ${{ env.dir-build }}
-        echo 'Build directory:'
-        ls -al ${{ env.dir-build }}
-        
     # Run CodeQL analysis
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
+    
+    # Install the dependencies
+    - name: Install dependencies
+      run: |
+        pip3 install --target=${{ env.dir-src }} -r ${{ env.file-requirements }}
+        echo Source Directory: 
+        ls -al ${{ env.dir-src }}

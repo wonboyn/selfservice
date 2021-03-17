@@ -1,20 +1,3 @@
-
-# Dot Net
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
-[Oo]ut/
-msbuild.log
-msbuild.err
-msbuild.wrn
-
 # Miscellaneous
 .DS_Store
 .env.local
@@ -22,6 +5,9 @@ msbuild.wrn
 .env.test.local
 .env.production.local
 *.zip
+
+# Python
+__pycache__/
 
 # Terraform
 /.terraform/*
