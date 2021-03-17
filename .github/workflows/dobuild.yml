@@ -73,4 +73,11 @@ jobs:
     # Zip the source
     - name: Zip It
       run: |
-        zip -r ${{ env.file-zip }} .
+        zip -r ${{ env.file-zip }} ${{ env.dir-src }}
+   
+    # Upload artefact
+    - name: Upload artefact
+      uses: actions/upload-artifact@v2
+      with:
+        name: SelfServiceBot
+        path: ${{ env.file-zip }}
