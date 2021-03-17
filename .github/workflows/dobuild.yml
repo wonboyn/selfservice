@@ -73,7 +73,9 @@ jobs:
     # Zip the source
     - name: Zip It
       run: |
-        zip -r ${{ env.file-zip }} ${{ env.dir-src }}
+#       zip -r ${{ env.file-zip }} ${{ env.dir-src }}
+        cd ${{ env.dir-src }}
+        zip -r ${{ env.file-zip }} .
    
     # Upload artefact
     - name: Upload artefact
