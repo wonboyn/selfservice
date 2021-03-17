@@ -28,6 +28,7 @@ jobs:
       dir-src: '${{ github.workspace }}/selfservicebot'
       dir-tests: '${{ github.workspace }}/selfservicebot/tests'
       file-requirements: '${{ github.workspace }}/requirements.txt'
+      file-zip: '${{ github.workspace }}/selfservicebot.zip'
     
     # Build steps
     steps:
@@ -68,3 +69,8 @@ jobs:
         pip3 install --target=${{ env.dir-src }} -r ${{ env.file-requirements }}
         echo Source Directory: 
         ls -al ${{ env.dir-src }}
+    
+    # Zip the source
+    - name: Zip It
+      run: |
+        zip -r ${{ env.file-zip }} .
