@@ -1,7 +1,8 @@
 #######################################################
-# This workflow gets triggered when a push to the
-# main branch occurs (eg pull request from develop). 
-# It performs the following tasks:
+# This workflow gets triggered by the creation of a
+# new release in Github (eg push of tag). The
+# workflow uploads a zip file containing the source
+# to the release. It performs the following tasks:
 #
 #    - log the git branch/commit details
 #    - install Python v3.8
@@ -10,15 +11,14 @@
 #    - install dependencies
 #    - perform tests
 #    - zip the source folder
-#    - upload the zip artefact
+#    - upload the zip file to the release
 #
 #######################################################
 
-name: Perform build & test
-on: 
-  push:
-    branches:
-      - main
+name: Create release
+on:
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -44,11 +44,11 @@ jobs:
         echo Event: ${{ github.event_name }}
         echo Git Ref: ${{ github.ref }}
         echo Git SHA: ${{ github.sha }}
-        echo Source Directory: 
-        ls -al ${{ env.dir-src }}
-    
+        echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
     # Setup Python
     - name: Setup Python
+      id: basic_info
       uses: actions/setup-python@v2
       with:
         python-version: '3.8'
@@ -69,7 +69,7 @@ jobs:
         pip3 install --target=${{ env.dir-src }} -r ${{ env.file-requirements }}
         echo Source Directory: 
         ls -al ${{ env.dir-src }}
-    
+
     # Run the tests
     # TODO!!!
     
@@ -78,10 +78,15 @@ jobs:
       run: |
         cd ${{ env.dir-src }}
         zip -r ${{ env.file-zip }} .
-   
-    # Upload artefact
-    - name: Upload artefact
-      uses: actions/upload-artifact@v2
+
+    # Upload release asset
+    - name: Upload release asset
+      id: upload-release-asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: SelfServiceBot
-        path: ${{ env.file-zip }}
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{ env.file-zip }}
+        asset_name: SelfServiceBot-${{ steps.basic_info.outputs.VERSION }}
+        asset_content_type: application/zip
