@@ -3,29 +3,23 @@
 # Licensed under the MIT License.
 ###########################################################
 
+# Third party imports
+from botbuilder.core import BotFrameworkAdapter, BotFrameworkAdapterSettings, ConversationState, MessageFactory, TurnContext
+from botbuilder.integration.aiohttp.skills import SkillHttpClient
+from botbuilder.schema import ActivityTypes, Activity, InputHints
 import sys
 import traceback
 
-from botbuilder.core import (
-    BotFrameworkAdapter,
-    BotFrameworkAdapterSettings,
-    ConversationState,
-    MessageFactory,
-    TurnContext,
-)
-from botbuilder.integration.aiohttp.skills import SkillHttpClient
-from botbuilder.schema import ActivityTypes, Activity, InputHints
-
-#from config import DefaultConfig, SkillConfiguration
-from config import BotConfig, SkillConfiguration
+# Local imports
 from bots.main_bot import ACTIVE_SKILL_PROPERTY_NAME
+from config import BotConfig
+from skills import SkillConfiguration
 
 
 class AdapterWithErrorHandler(BotFrameworkAdapter):
     def __init__(
         self,
         settings: BotFrameworkAdapterSettings,
-        #config: DefaultConfig,
         config: BotConfig,
         conversation_state: ConversationState,
         skill_client: SkillHttpClient = None,

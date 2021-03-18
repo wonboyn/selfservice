@@ -5,17 +5,20 @@
 ###########################################################
 
 import os
-from typing import Dict
-from botbuilder.core.skills import BotFrameworkSkill
+#from typing import Dict
+#from botbuilder.core.skills import BotFrameworkSkill
 
 
 class BotConfig:
     """ Bot Configuration """
 
-    PORT = 3978
+    # Callers to only those specified, '*' allows any caller.
+    # Example: os.environ.get("AllowedCallers", ["54d3bb6a-3b6d-4ccd-bbfd-cad5c72fb53a"])
+    ALLOWED_CALLERS = os.environ.get("AllowedCallers", ["*"])
+
     APP_ID = os.environ.get("MicrosoftAppId", "")
     APP_PASSWORD = os.environ.get("MicrosoftAppPassword", "")
-    SKILL_HOST_ENDPOINT = "http://localhost:3978/api/skills"
+    PORT = 3978
     SKILLS = [
         {
             "id": "EchoSkillBot",
@@ -23,14 +26,13 @@ class BotConfig:
             "skill_endpoint": "http://localhost:39783/api/messages",
         },
     ]
-
-    # Callers to only those specified, '*' allows any caller.
-    # Example: os.environ.get("AllowedCallers", ["54d3bb6a-3b6d-4ccd-bbfd-cad5c72fb53a"])
-    ALLOWED_CALLERS = os.environ.get("AllowedCallers", ["*"])
+    SKILL_HOST_ENDPOINT = "http://localhost:3978/api/skills"
+    SKILLS_TABLE_NAME = "skills"
 
 
-class SkillConfiguration:
-    SKILL_HOST_ENDPOINT = BotConfig.SKILL_HOST_ENDPOINT
-    SKILLS: Dict[str, BotFrameworkSkill] = {
-        skill["id"]: BotFrameworkSkill(**skill) for skill in BotConfig.SKILLS
-    }
+
+# class SkillConfiguration:
+#     SKILL_HOST_ENDPOINT = BotConfig.SKILL_HOST_ENDPOINT
+#     SKILLS: Dict[str, BotFrameworkSkill] = {
+#         skill["id"]: BotFrameworkSkill(**skill) for skill in BotConfig.SKILLS
+#     }

@@ -3,8 +3,8 @@
 # Licensed under the MIT License.
 ###########################################################
 
+# Third party imports
 from http import HTTPStatus
-
 from aiohttp import web
 from aiohttp.web import Request, Response
 from aiohttp.web_response import json_response
@@ -15,13 +15,18 @@ from botbuilder.integration.aiohttp.skills import SkillHttpClient
 from botbuilder.schema import Activity
 from botframework.connector.auth import AuthenticationConfiguration, SimpleCredentialProvider
 
+# Local imports
 from adapters import AdapterWithErrorHandler, SkillConversationIdFactory
 from authentication import AllowedSkillsClaimsValidator
 from bots import MainBot
-from config import BotConfig, SkillConfiguration
+#from config import BotConfig, SkillConfiguration
+from config import BotConfig
+from skills import SkillConfiguration
 
-# Load the configuration
+# Load the bot configuration
 CONFIG = BotConfig()
+
+# Load the skill configuration
 SKILL_CONFIG = SkillConfiguration()
 
 # Whitelist skills from SKILL_CONFIG
@@ -56,7 +61,6 @@ SKILL_HANDLER = SkillHandler(
 
 # Setup handler for inbound bot requests
 async def messages(req: Request) -> Response:
-    # Main bot message handler.
     if "application/json" in req.headers["Content-Type"]:
         body = await req.json()
     else:

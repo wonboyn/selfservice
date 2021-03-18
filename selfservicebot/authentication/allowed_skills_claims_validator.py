@@ -3,11 +3,11 @@
 # Licensed under the MIT License.
 ###########################################################
 
+# Third party imports
+from botframework.connector.auth import JwtTokenValidation, SkillValidation
 from typing import Awaitable, Callable, Dict, List
 
-from botframework.connector.auth import JwtTokenValidation, SkillValidation
-
-#from config import DefaultConfig
+# Local imports
 from config import BotConfig
 
 
@@ -15,7 +15,6 @@ class AllowedSkillsClaimsValidator:
 
     config_key = "ALLOWED_CALLERS"
 
-    #def __init__(self, config: DefaultConfig):
     def __init__(self, config: BotConfig):
         if not config:
             raise TypeError(

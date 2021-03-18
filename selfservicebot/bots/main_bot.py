@@ -3,15 +3,17 @@
 # Licensed under the MIT License.
 ###########################################################
 
+# Third party imports
 from botbuilder.core import ActivityHandler, ConversationState, MessageFactory, TurnContext
 from botbuilder.core.skills import BotFrameworkSkill
 from botbuilder.schema import ActivityTypes, ChannelAccount
 from botbuilder.integration.aiohttp.skills import SkillHttpClient
-
-#from config import DefaultConfig, SkillConfiguration
-from config import BotConfig, SkillConfiguration
-
 from typing import List
+
+# Local imports
+from config import BotConfig
+from skills import SkillConfiguration
+
 
 ACTIVE_SKILL_PROPERTY_NAME = "activeSkillProperty"
 TARGET_SKILL_ID = "EchoSkillBot"
@@ -23,7 +25,6 @@ class MainBot(ActivityHandler):
         conversation_state: ConversationState,
         skills_config: SkillConfiguration,
         skill_client: SkillHttpClient,
-        #config: DefaultConfig,
         config: BotConfig,
     ):
         self._bot_id = config.APP_ID
