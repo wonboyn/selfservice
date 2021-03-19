@@ -6,18 +6,10 @@ class WelcomeCard():
 
         self.card = AdaptiveCard()
         self.card.add([
-            TextBlock("Welcome to the Self Service Bot"),
-            ColumnSet(),
-                Column(),
-                    TextBlock("Column 1 Top Item"),
-                    TextBlock("Column 1 Second Item"),
-                    "<",
-                Column(),
-                    TextBlock("Column 2 Top Item"),
-                    TextBlock("Column 2 Second Item"),
-                    "<",
-                "<",
-            TextBlock("Lowest Level")
+            TextBlock(text="Self Service Bot", size="ExtraLarge", weight="Bolder"),
+            TextBlock(text="Welcome to the Self Service Bot. For a list of commands type \"help\".", size="Small"),
+            #TextBlock(text="For a list of commands type \"help\"", size="Small"),
+            TextBlock(text="For help with a specific command type \"help {command_name}\"", size="Small")
         ])
 
 

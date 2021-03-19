@@ -116,7 +116,6 @@ class MainBot(ActivityHandler):
 
                 # Create message to send
                 message = Activity(
-                    text = "Welcome",
                     type = ActivityTypes.message,
                     attachments = [CardFactory.adaptive_card(cardJson)]
                 )
