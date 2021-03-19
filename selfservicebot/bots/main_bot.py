@@ -4,13 +4,15 @@
 ###########################################################
 
 # Third party imports
-from botbuilder.core import ActivityHandler, ConversationState, MessageFactory, TurnContext
+from botbuilder.core import ActivityHandler, CardFactory, ConversationState, MessageFactory, TurnContext
 from botbuilder.core.skills import BotFrameworkSkill
-from botbuilder.schema import ActivityTypes, ChannelAccount
+from botbuilder.schema import Activity, ActivityTypes, Attachment, ChannelAccount
 from botbuilder.integration.aiohttp.skills import SkillHttpClient
 from typing import List
 
 # Local imports
+import json
+from cards import WelcomeCard
 from config import BotConfig
 from skills import SkillConfiguration
 
@@ -35,6 +37,7 @@ class MainBot(ActivityHandler):
             ACTIVE_SKILL_PROPERTY_NAME
         )
 
+
     async def on_turn(self, turn_context):
         # Forward all activities except EndOfConversation to the active skill.
         if turn_context.activity.type != ActivityTypes.end_of_conversation:
@@ -49,6 +52,7 @@ class MainBot(ActivityHandler):
                 return
 
         await super().on_turn(turn_context)
+
 
     async def on_message_activity(self, turn_context: TurnContext):
         if "skill" in turn_context.activity.text:
@@ -70,6 +74,7 @@ class MainBot(ActivityHandler):
                     "Me no nothin'. Say \"skill\" and I'll patch you through"
                 )
             )
+
 
     async def on_end_of_conversation_activity(self, turn_context: TurnContext):
         # forget skill invocation
@@ -97,14 +102,27 @@ class MainBot(ActivityHandler):
 
         await self._conversation_state.save_changes(turn_context, force=True)
 
+
     async def on_members_added_activity(
         self, members_added: List[ChannelAccount], turn_context: TurnContext
     ):
         for member in members_added:
             if member.id != turn_context.activity.recipient.id:
-                await turn_context.send_activity(
-                    MessageFactory.text("Hello and welcome!")
+
+                # Generate welcome card
+                card = WelcomeCard()
+                strJson = await card.genCard()
+                cardJson = json.loads(strJson)
+
+                # Create message to send
+                message = Activity(
+                    text = "Welcome",
+                    type = ActivityTypes.message,
+                    attachments = [CardFactory.adaptive_card(cardJson)]
                 )
+
+                await turn_context.send_activity(message)
+
 
     async def __send_to_skill(
         self, turn_context: TurnContext, target_skill: BotFrameworkSkill

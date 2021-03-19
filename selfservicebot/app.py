@@ -19,7 +19,6 @@ from botframework.connector.auth import AuthenticationConfiguration, SimpleCrede
 from adapters import AdapterWithErrorHandler, SkillConversationIdFactory
 from authentication import AllowedSkillsClaimsValidator
 from bots import MainBot
-#from config import BotConfig, SkillConfiguration
 from config import BotConfig
 from skills import SkillConfiguration
 
