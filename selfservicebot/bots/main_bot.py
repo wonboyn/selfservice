@@ -12,7 +12,7 @@ from typing import List
 
 # Local imports
 import json
-from cards import WelcomeCard
+from cards import ListSkillsCard, UnknownSkillCard, WelcomeCard
 from config import BotConfig
 from skills import SkillConfiguration
 
@@ -55,7 +55,30 @@ class MainBot(ActivityHandler):
 
 
     async def on_message_activity(self, turn_context: TurnContext):
-        if "skill" in turn_context.activity.text:
+
+        skills = self._skills_config.SKILLS
+        req = turn_context.activity.text.lower()
+
+        # Call for help?
+        if req.startswith("help"):
+
+            # Generate skills list card
+            card = ListSkillsCard(skills)
+            cardJson = await card.genCard()
+
+            # Create message to send
+            message = Activity(
+                type = ActivityTypes.message,
+                attachments = [CardFactory.adaptive_card(cardJson)]
+            )
+
+            # Send response
+            await turn_context.send_activity(message)
+
+
+        # Call to run skill?
+        elif req in skills:
+
             # Begin forwarding Activities to the skill
             await turn_context.send_activity(
                 MessageFactory.text("Got it, connecting you to the skill...")
@@ -67,13 +90,23 @@ class MainBot(ActivityHandler):
 
             # Send the activity to the skill
             await self.__send_to_skill(turn_context, skill)
+
+
+        # No idea what to do!
         else:
-            # just respond
-            await turn_context.send_activity(
-                MessageFactory.text(
-                    "Me no nothin'. Say \"skill\" and I'll patch you through"
-                )
+
+            # Generate unknown skill card
+            card = UnknownSkillCard(req)
+            cardJson = await card.genCard()
+
+            # Create message to send
+            message = Activity(
+                type = ActivityTypes.message,
+                attachments = [CardFactory.adaptive_card(cardJson)]
             )
+
+            # Send response
+            await turn_context.send_activity(message)
 
 
     async def on_end_of_conversation_activity(self, turn_context: TurnContext):
@@ -111,16 +144,15 @@ class MainBot(ActivityHandler):
 
                 # Generate welcome card
                 card = WelcomeCard()
-                strJson = await card.genCard()
-                cardJson = json.loads(strJson)
+                cardJson = await card.genCard()
 
                 # Create message to send
                 message = Activity(
-                    text = "Welcome",
                     type = ActivityTypes.message,
                     attachments = [CardFactory.adaptive_card(cardJson)]
                 )
 
+                # Send response
                 await turn_context.send_activity(message)
 
 

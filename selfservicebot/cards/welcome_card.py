@@ -1,26 +1,13 @@
-from adaptivecardbuilder import AdaptiveCard, Column, ColumnSet, TextBlock
+# Third party imports
+from adaptivecardbuilder import TextBlock
 
-class WelcomeCard():
+# Local imports
+from cards.base_card import BaseCard
+
+
+class WelcomeCard(BaseCard):
 
     def __init__(self):
 
-        self.card = AdaptiveCard()
-        self.card.add([
-            TextBlock("Welcome to the Self Service Bot"),
-            ColumnSet(),
-                Column(),
-                    TextBlock("Column 1 Top Item"),
-                    TextBlock("Column 1 Second Item"),
-                    "<",
-                Column(),
-                    TextBlock("Column 2 Top Item"),
-                    TextBlock("Column 2 Second Item"),
-                    "<",
-                "<",
-            TextBlock("Lowest Level")
-        ])
-
-
-    async def genCard(self):
-
-        return await self.card.to_json()
+        super().__init__()
+        self.card.add(TextBlock("Welcome to the Self Service Bot.", size="small"))
