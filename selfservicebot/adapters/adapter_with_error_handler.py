@@ -12,8 +12,7 @@ import traceback
 
 # Local imports
 from bots.main_bot import ACTIVE_SKILL_PROPERTY_NAME
-from config import BotConfig
-from skills import SkillConfiguration
+from config import BotConfig, SkillConfiguration
 
 
 class AdapterWithErrorHandler(BotFrameworkAdapter):

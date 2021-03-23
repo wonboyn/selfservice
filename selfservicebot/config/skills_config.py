@@ -1,11 +1,11 @@
-from typing import Dict
+# Third party imports
 from botbuilder.core.skills import BotFrameworkSkill
-
 import boto3
-from boto3.dynamodb.types import TypeSerializer
-from botocore.exceptions import ClientError
 
+# Local imports
 from config import BotConfig
+from typing import Dict
+
 
 # Extend the BotFrameworkSkill with a few extra attributes
 class BotSkill(BotFrameworkSkill):

@@ -3,7 +3,6 @@ from adaptivecardbuilder import Fact, FactSet, TextBlock
 
 # Local imports
 from cards.base_card import BaseCard
-from skills import BotSkill
 
 
 class ListSkillsCard(BaseCard):
