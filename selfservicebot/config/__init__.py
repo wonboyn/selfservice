@@ -1,6 +1,5 @@
-#from .config import BotConfig, SkillConfiguration
 from .config import BotConfig
+from .skills_config import BotSkill, SkillConfiguration
 
 
-#__all__ = ["BotConfig","SkillConfiguration"]
-__all__ = ["BotConfig"]
+__all__ = ["BotConfig", "BotSkill", "SkillConfiguration"]

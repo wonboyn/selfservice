@@ -8,13 +8,11 @@ from botbuilder.core import ActivityHandler, CardFactory, ConversationState, Mes
 from botbuilder.core.skills import BotFrameworkSkill
 from botbuilder.schema import Activity, ActivityTypes, Attachment, ChannelAccount
 from botbuilder.integration.aiohttp.skills import SkillHttpClient
-from typing import List
 
 # Local imports
-import json
 from cards import ListSkillsCard, UnknownSkillCard, WelcomeCard
-from config import BotConfig
-from skills import SkillConfiguration
+from config import BotConfig, SkillConfiguration
+from typing import List
 
 
 ACTIVE_SKILL_PROPERTY_NAME = "activeSkillProperty"

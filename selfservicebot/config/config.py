@@ -1,12 +1,9 @@
-#!/usr/bin/env python3
 ###########################################################
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 ###########################################################
 
 import os
-#from typing import Dict
-#from botbuilder.core.skills import BotFrameworkSkill
 
 
 class BotConfig:
@@ -29,10 +26,3 @@ class BotConfig:
     SKILL_HOST_ENDPOINT = "http://localhost:3978/api/skills"
     SKILLS_TABLE_NAME = "skills"
 
-
-
-# class SkillConfiguration:
-#     SKILL_HOST_ENDPOINT = BotConfig.SKILL_HOST_ENDPOINT
-#     SKILLS: Dict[str, BotFrameworkSkill] = {
-#         skill["id"]: BotFrameworkSkill(**skill) for skill in BotConfig.SKILLS
-#     }
