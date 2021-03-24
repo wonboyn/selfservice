@@ -79,7 +79,7 @@ jobs:
     # Zip the source
     - name: Zip It
       run: |
-        cd ${{ dir-src }}
+        cd ${{ env.dir-src }}
         zip -r ${{ env.file-zip }} *
    
     # Upload artefact
