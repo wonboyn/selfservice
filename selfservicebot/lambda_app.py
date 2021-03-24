@@ -75,7 +75,7 @@ async def main(auth_header, body):
 
 
 # Lambda entrypoint
-def lambda_handler(event, context):
+def lambda_handler(event):
 
     # Grab the headers
     headers = event["headers"]
