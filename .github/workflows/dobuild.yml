@@ -53,22 +53,25 @@ jobs:
       with:
         python-version: '3.8'
     
-    # Initialize CodeQL
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: python
-
-    # Run CodeQL analysis
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
-    
     # Install the dependencies
     - name: Install dependencies
       run: |
         pip3 install --target=${{ env.dir-src }} -r ${{ env.file-requirements }}
         echo Source Directory: 
         ls -al ${{ env.dir-src }}
+        echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
+        echo CODEQL_PYTHON: $CODEQL_PYTHON
+    
+    # Initialize CodeQL
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: python
+        setup-python-dependencies: false
+
+    # Run CodeQL analysis
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
     
     # Run the tests
     # TODO!!!
@@ -76,8 +79,8 @@ jobs:
     # Zip the source
     - name: Zip It
       run: |
-        cd ${{ github.workspace }}
-        zip -r ${{ env.file-zip }} ./selfservicebot
+        cd ${{ dir-src }}
+        zip -r ${{ env.file-zip }} *
    
     # Upload artefact
     - name: Upload artefact
