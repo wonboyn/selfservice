@@ -76,7 +76,8 @@ jobs:
     # Zip the source
     - name: Zip It
       run: |
-        zip -r ${{ env.file-zip }} ${{ env.dir-src }}
+        cd ${{ github.workspace }}
+        zip -r ${{ env.file-zip }} ./selfservicebot
    
     # Upload artefact
     - name: Upload artefact
