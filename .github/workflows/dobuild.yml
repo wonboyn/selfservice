@@ -5,9 +5,9 @@
 #
 #    - log the git branch/commit details
 #    - install Python v3.8
+#    - install dependencies
 #    - initialize CodeQL
 #    - run CodeQL analysis
-#    - install dependencies
 #    - perform tests
 #    - zip the source folder
 #    - upload the zip artefact
