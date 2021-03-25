@@ -28,6 +28,7 @@ jobs:
     env:
       dir-src: '${{ github.workspace }}/selfservicebot'
       dir-tests: '${{ github.workspace }}/selfservicebot/tests'
+      dir-thirdparty: '${{ github.workspace }}/selfservicebot/thirdparty'
       file-requirements: '${{ github.workspace }}/requirements.txt'
       file-zip: '${{ github.workspace }}/selfservicebot.zip'
     
@@ -56,9 +57,11 @@ jobs:
     # Install the dependencies
     - name: Install dependencies
       run: |
-        pip3 install --target=${{ env.dir-src }} -r ${{ env.file-requirements }}
+        pip3 install --target=${{ env.dir-thirdparty }} -r ${{ env.file-requirements }}
         echo Source Directory: 
         ls -al ${{ env.dir-src }}
+        echo Third Party Directory: 
+        ls -al ${{ env.dir-thirdparty }}
         echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
         echo CODEQL_PYTHON: $CODEQL_PYTHON
     
