@@ -1,7 +1,10 @@
 name: "CodeQL config"
 
 paths: 
-  - selfservicebot
-
-paths-ignore: 
-  - selfservicebot/tests
+  - selfservicebot/lambda.py
+  - selfservicebot/local.py
+  - selfservicebot/adapters
+  - selfservicebot/authentication
+  - selfservicebot/bots
+  - selfservicebot/cards
+  - selfservicebot/config
