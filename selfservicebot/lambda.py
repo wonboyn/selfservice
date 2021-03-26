@@ -14,6 +14,11 @@ from config import BotConfig, SkillConfiguration
 import asyncio, json
 
 
+# DEBUG
+import sys
+print (sys.path)
+
+
 # Async main function
 async def main(auth_header, body):
 
@@ -74,8 +79,8 @@ async def main(auth_header, body):
 
 
 
-# Lambda entrypoint
-def lambda_handler(event, context):
+# Lambda handler entrypoint
+def handler(event, context):
 
     # Grab the headers
     headers = event["headers"]
