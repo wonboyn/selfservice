@@ -1,3 +1,7 @@
+# DEBUG
+import sys
+print (sys.path)
+
 # Third party imports
 from botbuilder.core import BotFrameworkAdapterSettings, ConversationState, MemoryStorage
 from botbuilder.core.skills import SkillHandler
@@ -12,11 +16,6 @@ from authentication import AllowedSkillsClaimsValidator
 from bots import MainBot
 from config import BotConfig, SkillConfiguration
 import asyncio, json
-
-
-# DEBUG
-import sys
-print (sys.path)
 
 
 # Async main function
