@@ -9,8 +9,7 @@
 #    - initialize CodeQL
 #    - run CodeQL analysis
 #    - perform tests
-#    - zip the source folder
-#    - upload the zip artefact
+#    - upload the source as an artefact
 #
 #######################################################
 
@@ -80,14 +79,12 @@ jobs:
     # Run the tests
     # TODO!!!
     
-    # Zip the source
-    - name: Zip It
-      run: |
-        (cd ${{ env.dir-src }}; zip -r ${{ env.file-zip }} .)
-   
     # Upload artefact
     - name: Upload artefact
       uses: actions/upload-artifact@v2
       with:
         name: SelfServiceBot
-        path: ${{ env.file-zip }}
+        path: |
+          ${{ env.dir-src }}
+          !${{ env.dir-tests }}
+
