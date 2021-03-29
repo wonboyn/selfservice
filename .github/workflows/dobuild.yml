@@ -30,7 +30,7 @@ jobs:
       dir-libs: '${{ github.workspace }}/selfservicebot/libs'
       dir-tests: '${{ github.workspace }}/selfservicebot/tests'
       file-requirements: '${{ github.workspace }}/requirements.txt'
-      file-zip: '${{ github.workspace }}/selfservicebot.zip'
+      file-zip: '${{ github.workspace }}/artefact.zip'
     
     # Build steps
     steps:
