@@ -5,9 +5,9 @@
 #
 #    - log the git branch/commit details
 #    - install Python v3.8
-#    - install dependencies
 #    - initialize CodeQL
 #    - run CodeQL analysis
+#    - install dependencies
 #    - perform tests
 #    - upload the source as an artefact
 #
@@ -26,10 +26,8 @@ jobs:
     # Variables for the build job
     env:
       dir-src: '${{ github.workspace }}/selfservicebot'
-      dir-libs: '${{ github.workspace }}/selfservicebot/libs'
       dir-tests: '${{ github.workspace }}/selfservicebot/tests'
       file-requirements: '${{ github.workspace }}/requirements.txt'
-      file-zip: '${{ github.workspace }}/artefact.zip'
     
     # Build steps
     steps:
@@ -53,17 +51,6 @@ jobs:
       with:
         python-version: '3.8'
     
-    # Install the dependencies
-    - name: Install dependencies
-      run: |
-        pip3 install --target=${{ env.dir-libs }} -r ${{ env.file-requirements }}
-        echo Source Directory: 
-        ls -al ${{ env.dir-src }}
-        echo Third Party Libraries Directory: 
-        ls -al ${{ env.dir-libs }}
-        echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
-        echo CODEQL_PYTHON: $CODEQL_PYTHON
-    
     # Initialize CodeQL
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
@@ -75,6 +62,15 @@ jobs:
     # Run CodeQL analysis
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
+    
+    # Install the dependencies
+    - name: Install dependencies
+      run: |
+        pip3 install --target=${{ env.dir-src }} -r ${{ env.file-requirements }}
+        echo Source Directory: 
+        ls -al ${{ env.dir-src }}
+        echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
+        echo CODEQL_PYTHON: $CODEQL_PYTHON
     
     # Run the tests
     # TODO!!!
