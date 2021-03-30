@@ -67,14 +67,16 @@ async def main(auth_header, body):
     if invoke_response:
         return {
             "statusCode": str(invoke_response.status),
+            "headers": { "Content-Type": "application/json" },
             "body": json.dumps(invoke_response.body),
-            "headers": {
-                "Content-Type": "application/json"
-            },
         }
     
     # Handle successful response
-    return { "statusCode": str(HTTPStatus.OK) }
+    return { 
+        "statusCode": str(HTTPStatus.OK),
+        "headers": { "Content-Type": "application/json" },
+        "body": "",
+    }
 
 
 
