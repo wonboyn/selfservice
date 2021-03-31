@@ -1,7 +1,3 @@
-# DEBUG
-import sys
-print (sys.path)
-
 # Third party imports
 from botbuilder.core import BotFrameworkAdapterSettings, ConversationState, MemoryStorage
 from botbuilder.core.skills import SkillHandler
@@ -63,22 +59,36 @@ async def main(auth_header, body):
     # Call bot
     invoke_response = await ADAPTER.process_activity(activity, auth_header, BOT.on_turn)
 
-    # Handle error response
-    if invoke_response:
-        return {
-            "isBase64Encoded": False,
-            "statusCode": str(invoke_response.status),
-            "headers": { "Content-Type": "application/json" },
-            "body": json.dumps(invoke_response.body)
-        }
+    # Build response object
+    hdrs = { "Content-Type": "application/json" }
+    resp = dict()
+    resp.update({"isBase64Encoded": "false"})
+    resp.update({"headers": hdrs})
     
-    # Handle successful response
-    return { 
-        "isBase64Encoded": False,
-        "statusCode": str(HTTPStatus.OK),
-        "headers": { "Content-Type": "application/json" },
-        "body": ""
-    }
+    if invoke_response:
+
+        # Debug
+        print("Invoke Response exists.... so error path")
+
+        # Add error details to response
+        resp.update({"statusCode": str(invoke_response.status)})
+        resp.update({"body": json.dumps(invoke_response.body)})
+
+    else:
+
+        # Debug
+        print("Invoke Response does not exist.... so success path")
+
+        # Add error details to response
+        resp.update({"statusCode": HTTPStatus.OK})
+        resp.update({"body": ""})
+
+
+    # Debug
+    print(json.dumps(resp))
+    
+    # Send response
+    return json.dumps(resp)
 
 
 

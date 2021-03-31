@@ -20,6 +20,8 @@ from adapters import AdapterWithErrorHandler, SkillConversationIdFactory
 from authentication import AllowedSkillsClaimsValidator
 from bots import MainBot
 from config import BotConfig, SkillConfiguration
+import json
+
 
 # Load the bot configuration
 CONFIG = BotConfig()
@@ -67,10 +69,40 @@ async def messages(req: Request) -> Response:
     activity = Activity().deserialize(body)
     auth_header = req.headers["Authorization"] if "Authorization" in req.headers else ""
 
+    # Call bot
     invoke_response = await ADAPTER.process_activity(activity, auth_header, BOT.on_turn)
+
+    # Build response object
+    hdrs = { "Content-Type": "application/json" }
+    resp = dict()
+    resp.update({"isBase64Encoded": "false"})
+    resp.update({"headers": hdrs})
+    
     if invoke_response:
-        return json_response(data=invoke_response.body, status=invoke_response.status)
-    return Response(status=HTTPStatus.OK)
+
+        # Debug
+        print("Invoke Response exists.... so error path")
+
+        # Add status code & body
+        resp.update({"statusCode": str(invoke_response.status)})
+        resp.update({"body": json.dumps(invoke_response.body)})
+
+    else:
+
+        # Debug
+        print("Invoke Response does not exist.... so success path")
+
+        # Add status code & body
+        resp.update({"statusCode": HTTPStatus.OK})
+        resp.update({"body": ""})
+
+    # Debug
+    print(json.dumps(resp))
+    
+    # Send response
+    return json.dumps(resp)
+
+
 
 # Listen for incoming requests on /api/messages
 APP = web.Application(middlewares=[aiohttp_error_middleware])
