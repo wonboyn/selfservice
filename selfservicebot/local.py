@@ -73,25 +73,11 @@ async def messages(req: Request) -> Response:
     invoke_response = await ADAPTER.process_activity(activity, auth_header, BOT.on_turn)
 
     # Build response object
-    hdrs = { "Content-Type": "application/json" }
-    resp = dict()
-    resp.update({"isBase64Encoded": False})
-    resp.update({"headers": hdrs})
-    
     if invoke_response:
-        resp.update({"statusCode": str(invoke_response.status)})
-        resp.update({"body": json.dumps(invoke_response.body)})
+        return json_response(data=invoke_response.body, status=invoke_response.status)
 
     else:
-        resp.update({"statusCode": HTTPStatus.OK})
-        resp.update({"body": ""})
-
-    # Debug
-    print("Payload being sent to API Gateway...")
-    print(json.dumps(resp))
-    
-    # Send response
-    return json.dumps(resp)
+        return Response(status=HTTPStatus.OK)
 
 
 
