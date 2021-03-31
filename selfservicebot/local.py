@@ -1,6 +1,8 @@
 ###########################################################
 # This module is used for local testing of the 
-# self service bot.
+# self service bot using the Bot emulator. It 
+# runs a local web server & processes any requests
+# received on the /api/messages endpoint.
 ###########################################################
 
 # Third party imports
@@ -11,7 +13,9 @@ from http import HTTPStatus
 
 # Local imports
 from common import processMsg
-from config import BotConfig
+
+# Port that the web server should listen on
+PORT = 3978
 
 
 # Setup handler for inbound bot requests
@@ -41,6 +45,6 @@ APP.router.add_post("/api/messages", messages)
 
 if __name__ == "__main__":
     try:
-        web.run_app(APP, host="localhost", port=BotConfig.PORT)
+        web.run_app(APP, host="localhost", port=PORT)
     except Exception as error:
         raise error
