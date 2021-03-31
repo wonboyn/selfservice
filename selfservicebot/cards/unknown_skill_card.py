@@ -1,5 +1,5 @@
 # Third party imports
-from adaptivecardbuilder import AdaptiveCard, TextBlock
+from adaptivecardbuilder import TextBlock
 
 # Local imports
 from cards.base_card import BaseCard

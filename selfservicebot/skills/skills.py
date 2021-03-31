@@ -1,5 +1,4 @@
 # Third party imports
-from botbuilder.core.skills import BotFrameworkSkill
 import boto3
 
 # Local imports
@@ -7,28 +6,28 @@ from config import BotConfig
 from typing import Dict
 
 
-# Extend the BotFrameworkSkill with a few extra attributes
-class BotSkill(BotFrameworkSkill):
+# Skill class
+class Skill:
     
     def __init__(
         self, 
-        id: str = None, 
-        app_id: str = None, 
-        skill_endpoint: str = None,
-        category: str = None,
+        name: str = None, 
         description: str = None,
+        category: str = None,
+        lambda_name: str = None,
         docurl: str = None,
     ):
-        super().__init__(id, app_id, skill_endpoint)
         self.category = category
         self.description = description
         self.docurl = docurl
+        self.lambda_name = lambda_name
+        self.name = name
 
 
 
-class SkillConfiguration:
-    SKILL_HOST_ENDPOINT = BotConfig.SKILL_HOST_ENDPOINT
-    SKILLS: Dict[str, BotFrameworkSkill] = dict()
+class Skills:
+
+    SKILLS: Dict[str, Skill] = dict()
 
     def __init__(self):
 
@@ -45,12 +44,12 @@ class SkillConfiguration:
 
         # Populate SKILLS class variable
         for item in items:
-            id = item['name']
+            name = item['name']
             desc = item['description']
-            boturl = item['boturl']
+            lambda_name = item['boturl']
             category = item['category']
             docurl = item['docurl']
-            skill = BotSkill(id, '', boturl, category, desc, docurl)
-            self.SKILLS[id] = skill
+            skill = Skill(name, desc, category, lambda_name, docurl)
+            self.SKILLS[name] = skill
 
 

@@ -1,4 +1,3 @@
-from .main_bot import MainBot
+from .self_service_bot import SelfServiceBot
 
-
-__all__ = ["MainBot"]
+__all__ = ["SelfServiceBot"]
