@@ -20,7 +20,6 @@ from adapters import AdapterWithErrorHandler, SkillConversationIdFactory
 from authentication import AllowedSkillsClaimsValidator
 from bots import MainBot
 from config import BotConfig, SkillConfiguration
-import json
 
 
 # Load the bot configuration

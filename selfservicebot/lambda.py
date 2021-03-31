@@ -73,13 +73,11 @@ async def main(auth_header, body):
         resp.update({"statusCode": HTTPStatus.OK})
         resp.update({"body": ""})
 
-
     # Debug
-    print("Payload being sent to API Gateway...")
+    print("Payload returned from async method...")
     print(json.dumps(resp))
     
     # Send response
-    #return json.dumps(resp)
     return resp
 
 
@@ -101,4 +99,11 @@ def handler(event, context):
     # Call the async main function
     # loop = asyncio.get_event_loop()
     # loop.run_until_complete(main())
-    asyncio.run(main(auth_header, body))
+    resp = asyncio.run(main(auth_header, body))
+
+    # Debug
+    print("Payload being sent to API Gateway...")
+    print(json.dumps(resp))
+    
+    # Send response
+    return resp
