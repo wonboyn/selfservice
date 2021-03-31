@@ -1,7 +1,7 @@
 ###########################################################
 # This module is used for local testing of the 
-# self service bot using the Bot emulator. It 
-# runs a local web server & processes any requests
+# self service bot using the Bot Framework emulator.
+# It runs a local web server & processes any requests
 # received on the /api/messages endpoint.
 ###########################################################
 

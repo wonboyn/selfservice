@@ -1,3 +1,9 @@
+###########################################################
+# This module contains the main logic for
+# configuring & running the Bot Framework.
+# 
+###########################################################
+
 # Third party imports
 from botbuilder.core import BotFrameworkAdapterSettings, TurnContext, BotFrameworkAdapter
 from botbuilder.schema import Activity, ActivityTypes
@@ -8,15 +14,10 @@ import traceback
 # Local imports
 from bots import SelfServiceBot
 from config import BotConfig
-from skills import Skills
 
 
 # Load the bot configuration
 CONFIG = BotConfig()
-
-
-# Load the available skills
-SKILLS = Skills()
 
 
 # Configure the Bot settings
@@ -57,7 +58,7 @@ async def on_error(context: TurnContext, error: Exception):
 
 
 # Create the Self Service Bot
-BOT = SelfServiceBot(SKILLS)
+BOT = SelfServiceBot()
 
 
 # Setup handler for processing inbound bot requests

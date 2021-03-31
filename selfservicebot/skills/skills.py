@@ -27,9 +27,10 @@ class Skill:
 
 class Skills:
 
-    SKILLS: Dict[str, Skill] = dict()
-
     def __init__(self):
+
+        # Setup dictionary for skills
+        self._skills: Dict[str, Skill] = dict()
 
         # Fetch skills from DynamoDB
         dynamodb = boto3.resource("dynamodb")
@@ -50,6 +51,8 @@ class Skills:
             category = item['category']
             docurl = item['docurl']
             skill = Skill(name, desc, category, lambda_name, docurl)
-            self.SKILLS[name] = skill
+            self._skills[name] = skill
 
 
+    def getSkills(self):
+        return self._skills
