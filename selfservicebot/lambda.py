@@ -12,31 +12,6 @@ import json
 from common import processMsg
 
 
-# # Separate async function to workaround
-# # AWS Lambda limitation.
-# async def main(auth_header, body):
-
-#     # Process the message
-#     response = await processMsg(auth_header, body)
-
-#     # Build response object
-#     hdrs = { "Content-Type": "application/json" }
-#     resp = dict()
-#     resp.update({"isBase64Encoded": False})
-#     resp.update({"headers": hdrs})
-    
-#     if response:
-#         resp.update({"statusCode": str(response.status)})
-#         resp.update({"body": json.dumps(response.body)})
-
-#     else:
-#         resp.update({"statusCode": HTTPStatus.OK})
-#         resp.update({"body": ""})
-
-#     # Send response
-#     return resp
-
-
 
 # Lambda handler entrypoint
 def handler(event, context):
@@ -53,7 +28,6 @@ def handler(event, context):
     body = json.loads(bodyStr)
 
     # Process the request in an async co-routine
-    #response = asyncio.run(main(auth_header, body))
     resp = asyncio.run(processMsg(auth_header, body))
 
     # Construct response for API Gateway

@@ -1,6 +1,7 @@
 ###########################################################
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License.
+# This module contains the logic for the Self 
+# Service Bot itself.
+# 
 ###########################################################
 
 # Third party imports
@@ -15,11 +16,13 @@ from typing import List
 
 
 class SelfServiceBot(ActivityHandler):
-    def __init__(
-        self,
-        skills: Skills
-    ):
-        self._skills = skills
+
+    # Constructor
+    def __init__(self):
+
+        # Load skills
+        skillsObj = Skills()
+        self._skills = skillsObj.getSkills()
 
 
     # Handler for any members being added to the channel
@@ -46,14 +49,13 @@ class SelfServiceBot(ActivityHandler):
     # Handler for any messages to the bot
     async def on_message_activity(self, turn_context: TurnContext):
 
-        skills = self._skills.SKILLS
         req = turn_context.activity.text.lower()
 
         # Call for help?
         if req.startswith("help"):
 
             # Generate skills list card
-            card = ListSkillsCard(skills)
+            card = ListSkillsCard(self._skills)
             cardJson = await card.genCard()
 
             # Create message to send
@@ -67,7 +69,7 @@ class SelfServiceBot(ActivityHandler):
 
 
         # Call to run skill?
-        elif req in skills:
+        elif req in self._skills:
 
             # Begin forwarding Activities to the skill
             await turn_context.send_activity(
