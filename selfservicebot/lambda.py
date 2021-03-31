@@ -79,7 +79,8 @@ async def main(auth_header, body):
     print(json.dumps(resp))
     
     # Send response
-    return json.dumps(resp)
+    #return json.dumps(resp)
+    return resp
 
 
 
