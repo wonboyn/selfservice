@@ -75,28 +75,19 @@ async def messages(req: Request) -> Response:
     # Build response object
     hdrs = { "Content-Type": "application/json" }
     resp = dict()
-    resp.update({"isBase64Encoded": "false"})
+    resp.update({"isBase64Encoded": False})
     resp.update({"headers": hdrs})
     
     if invoke_response:
-
-        # Debug
-        print("Invoke Response exists.... so error path")
-
-        # Add status code & body
         resp.update({"statusCode": str(invoke_response.status)})
         resp.update({"body": json.dumps(invoke_response.body)})
 
     else:
-
-        # Debug
-        print("Invoke Response does not exist.... so success path")
-
-        # Add status code & body
         resp.update({"statusCode": HTTPStatus.OK})
         resp.update({"body": ""})
 
     # Debug
+    print("Payload being sent to API Gateway...")
     print(json.dumps(resp))
     
     # Send response
