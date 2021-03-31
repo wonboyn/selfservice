@@ -66,16 +66,18 @@ async def main(auth_header, body):
     # Handle error response
     if invoke_response:
         return {
+            "isBase64Encoded": False,
             "statusCode": str(invoke_response.status),
             "headers": { "Content-Type": "application/json" },
-            "body": json.dumps(invoke_response.body),
+            "body": json.dumps(invoke_response.body)
         }
     
     # Handle successful response
     return { 
+        "isBase64Encoded": False,
         "statusCode": str(HTTPStatus.OK),
         "headers": { "Content-Type": "application/json" },
-        "body": "",
+        "body": ""
     }
 
 
