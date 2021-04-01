@@ -49,7 +49,8 @@ class SelfServiceBot(ActivityHandler):
     # Handler for any messages to the bot
     async def on_message_activity(self, turn_context: TurnContext):
 
-        # Get the request
+        # Check the activity text
+        req = dict()
         if turn_context.activity.text is None:
 
             # No text provided so check the activity value
@@ -63,22 +64,36 @@ class SelfServiceBot(ActivityHandler):
 
                 # Check for skill
                 if "skill" in turn_context.activity.value:
-                    req = turn_context.activity.value["skill"].lower()
+
+                    # Iterate the values 
+                    for key in turn_context.activity.value.keys():
+                        req.update({key: turn_context.activity.value[key].lower()})
+
+                else:
+
+                    # No skill provided
+                    # We should not end up here!
+                    return
 
         
         else:
-            req = turn_context.activity.text.lower()
+
+            # Parse the activity text
+            text = turn_context.activity.text.lower()
+            args = text.split(" ", 1)
+            req.update({"skill": args[0]})
+            if len(args) > 1:
+                req.update({"name": args[1]})
 
 
         # Call for help?
-        if req.startswith("help"):
+        if req["skill"] == "help":
 
             # Basic or detailed help?
-            args = req.split()
-            if len(args) > 1:
+            if "name" in req:
 
                 # Detailed help
-                message = await self.__doHelpSkill(args[1])
+                message = await self.__doHelpSkill(req["name"])
 
             else:
 
@@ -90,7 +105,7 @@ class SelfServiceBot(ActivityHandler):
 
 
         # Call to run skill?
-        elif req in self._skills:
+        elif req["skill"] in self._skills:
 
             # Begin forwarding Activities to the skill
             await turn_context.send_activity(
@@ -109,7 +124,7 @@ class SelfServiceBot(ActivityHandler):
         else:
 
             # Create message to send
-            message = await self.__doUnknownSkill(req)
+            message = await self.__doUnknownSkill(req["skill"])
 
             # Send response
             await turn_context.send_activity(message)
