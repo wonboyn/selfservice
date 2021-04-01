@@ -9,7 +9,7 @@ from botbuilder.core import ActivityHandler, CardFactory, MessageFactory, TurnCo
 from botbuilder.schema import Activity, ActivityTypes, ChannelAccount
 
 # Local imports
-from cards import ListSkillsCard, UnknownSkillCard, WelcomeCard
+from cards import HelpCard, HelpSkillCard, UnknownSkillCard, WelcomeCard
 from skills import Skills
 from typing import List
 
@@ -49,20 +49,41 @@ class SelfServiceBot(ActivityHandler):
     # Handler for any messages to the bot
     async def on_message_activity(self, turn_context: TurnContext):
 
-        req = turn_context.activity.text.lower()
+        # Get the request
+        if turn_context.activity.text is None:
+
+            # No text provided so check the activity value
+            if not bool(turn_context.activity.value):
+
+                # No text & no value.
+                # We should not end up here!
+                return
+
+            else:
+
+                # Check for skill
+                if "skill" in turn_context.activity.value:
+                    req = turn_context.activity.value["skill"].lower()
+
+        
+        else:
+            req = turn_context.activity.text.lower()
+
 
         # Call for help?
         if req.startswith("help"):
 
-            # Generate skills list card
-            card = ListSkillsCard(self._skills)
-            cardJson = await card.genCard()
+            # Basic or detailed help?
+            args = req.split()
+            if len(args) > 1:
 
-            # Create message to send
-            message = Activity(
-                type = ActivityTypes.message,
-                attachments = [CardFactory.adaptive_card(cardJson)]
-            )
+                # Detailed help
+                message = await self.__doHelpSkill(args[1])
+
+            else:
+
+                # Basic help
+                message = await self.__doHelp()
 
             # Send response
             await turn_context.send_activity(message)
@@ -87,16 +108,69 @@ class SelfServiceBot(ActivityHandler):
         # No idea what to do!
         else:
 
-            # Generate unknown skill card
-            card = UnknownSkillCard(req)
-            cardJson = await card.genCard()
-
             # Create message to send
-            message = Activity(
-                type = ActivityTypes.message,
-                attachments = [CardFactory.adaptive_card(cardJson)]
-            )
+            message = await self.__doUnknownSkill(req)
 
             # Send response
             await turn_context.send_activity(message)
 
+
+    # Handle basic help request
+    async def __doHelp(self):
+
+        # Generate adaptive card
+        card = HelpCard(self._skills)
+        cardJson = await card.genCard()
+
+        # Create message
+        message = Activity(
+                type = ActivityTypes.message,
+                attachments = [CardFactory.adaptive_card(cardJson)]
+        )
+
+        # Return the message
+        return message
+
+
+    # Handle skill help request
+    async def __doHelpSkill(self, arg):
+
+        # Check that the skill exists
+        if arg in self._skills:
+
+            # Generate adaptive card
+            skill = self._skills[arg]
+            card = HelpSkillCard(skill)
+            cardJson = await card.genCard()
+
+        else:
+
+            # Unknown skills requested
+            card = UnknownSkillCard(arg)
+            cardJson = await card.genCard()
+
+        # Create message
+        message = Activity(
+                type = ActivityTypes.message,
+                attachments = [CardFactory.adaptive_card(cardJson)]
+        )
+
+        # Return the message
+        return message
+
+
+    # Handle unknown skill
+    async def __doUnknownSkill(self, skill):
+
+        # Generate unknown skill card
+        card = UnknownSkillCard(skill)
+        cardJson = await card.genCard()
+
+        # Create message
+        message = Activity(
+                type = ActivityTypes.message,
+                attachments = [CardFactory.adaptive_card(cardJson)]
+        )
+
+        # Return the message
+        return message

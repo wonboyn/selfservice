@@ -1,3 +1,9 @@
+###########################################################
+# This module provides a base template class for
+# generating an adaptive card.
+# 
+###########################################################
+
 # Third party imports
 from adaptivecardbuilder import AdaptiveCard, TextBlock
 

@@ -11,4 +11,5 @@ class WelcomeCard(BaseCard):
 
         super().__init__()
         self.card.add(TextBlock("Welcome to the Self Service Bot.", size="small"))
-        self.card.add(ActionSubmit(title="List Skills", data={"skill":"help"}))
+        self.card.add(TextBlock("For a list of skills click the button below.", size="small"))
+        self.card.add(ActionSubmit(title="Get Help", data={"skill":"help"}))
