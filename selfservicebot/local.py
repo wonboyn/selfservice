@@ -20,12 +20,18 @@ PORT = 3978
 
 # Setup handler for inbound bot requests
 async def messages(req: Request) -> Response:
+
+    # Ensure request is json based
     if "application/json" in req.headers["Content-Type"]:
         body = await req.json()
     else:
         return Response(status=HTTPStatus.UNSUPPORTED_MEDIA_TYPE)
 
-    auth_header = req.headers["Authorization"] if "Authorization" in req.headers else ""
+    # Extract the auth headers if available
+    if "Authorization" in req.headers:
+        auth_header = req.headers["Authorization"]
+    else:
+        auth_header = ""
 
     # Process the message
     response = await processMsg(auth_header, body)
