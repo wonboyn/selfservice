@@ -10,6 +10,8 @@ class UnknownSkillCard(BaseCard):
     def __init__(self, skill):
 
         super().__init__()
+        data = dict()
+        data.update({"skill": "help"})
         self.card.add(TextBlock("Unknown skill: " + skill, size="small"))
         self.card.add(TextBlock("For a list of skills click the button below.", size="small"))
-        self.card.add(ActionSubmit(title="Get Help", data={"skill":"help"}))
+        self.card.add(ActionSubmit(title="Get Help", data=data))
