@@ -17,12 +17,23 @@ class Skill:
         lambda_name: str = None,
         docurl: str = None,
     ):
-        self.category = category
-        self.description = description
-        self.docurl = docurl
-        self.lambda_name = lambda_name
-        self.name = name
+        self.__category = category
+        self.__description = description
+        self.__docurl = docurl
+        self.__lambda_name = lambda_name
+        self.__name = name
 
+    def getCategory(self):
+        return self.__category
+
+    def getDesc(self):
+        return self.__description
+
+    def getDocUrl(self):
+        return self.__docurl
+
+    def getName(self):
+        return self.__name
 
 
 class Skills:
@@ -52,7 +63,6 @@ class Skills:
             docurl = item['docurl']
             skill = Skill(name, desc, category, lambda_name, docurl)
             self._skills[name] = skill
-
 
     def getSkills(self):
         return self._skills
