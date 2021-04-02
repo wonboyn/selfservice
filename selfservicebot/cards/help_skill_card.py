@@ -17,8 +17,14 @@ class HelpSkillCard(BaseCard):
     def __init__(self, skill):
 
         super().__init__()
-        self.card.add(TextBlock("The following skills are available.", size="small"))
+
+        # Get skill details
+        name = skill.getName()
+        cat = skill.getCategory()
+        desc = skill.getDesc()
+
+        self.card.add(TextBlock("Skill details.", size="small"))
         self.card.add(FactSet())
-        # for name in skills.keys():
-        #     botskill = skills[name]
-        #     self.card.add(Fact(name, botskill.description)) 
+        self.card.add(Fact("Name", name)) 
+        self.card.add(Fact("Category", cat)) 
+        self.card.add(Fact("Description", desc)) 

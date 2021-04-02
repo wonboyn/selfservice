@@ -19,32 +19,36 @@ class HelpCard(BaseCard):
         super().__init__()
         self.card.add(TextBlock("The following skills are available.", size="small"))
 
-        # Icon url for table
-        #icon_url = "https://fontawesome.com/icons/info-circle?style=solid"
-
         # Iterate the skills
         for name in skills.keys():
 
-            # Retrieve the skill
-            botskill = skills[name]
+            # Retrieve the skill details
+            skill = skills[name]
+            desc = skill.getDesc()
+
+            # Create dictionary for info button
+            info = dict()
+            info.update({"skill": "help"})
+            info.update({"name": name})
+
+            # Create dictionary for run button
+            run = dict()
+            run.update({"skill": "name"})
 
             # Add Column for name
             self.card.add(ColumnSet())
             self.card.add(Column(width=1))
-            self.card.add(TextBlock(text=name, horizontalAlignment="center"))
+            self.card.add(TextBlock(text=name, horizontalAlignment="left"))
             self.card.up_one_level()
 
             # Add Column for description
             self.card.add(Column(width=2))
-            self.card.add(TextBlock(text=botskill.description, horizontalAlignment="left"))
+            self.card.add(TextBlock(text=desc, horizontalAlignment="left"))
             self.card.up_one_level()
 
-            # Add Column for button
-            data = dict()
-            data.update({"skill": "help"})
-            data.update({"name": name})
+            # Add Column for action buttons
             self.card.add(Column(width=1))
             self.card.add(ActionSet())
-            #self.card.add(ActionSubmit(iconUrl=flag_url, data=data), is_action=True)
-            self.card.add(ActionSubmit(title="Detail", data=data))
+            self.card.add(ActionSubmit(title="Info", data=info))
+            self.card.add(ActionSubmit(title="Run", data=run))
             self.card.back_to_top()
