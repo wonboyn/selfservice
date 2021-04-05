@@ -13,23 +13,27 @@ from http import HTTPStatus
 
 # Local imports
 from common import processMsg
+from constants import HttpHeaders
 
-# Port that the web server should listen on
+# Web server binding constants
+HOST = "localhost"
 PORT = 3978
+ROUTE = "/api/messages"
+
 
 
 # Setup handler for inbound bot requests
 async def messages(req: Request) -> Response:
 
     # Ensure request is json based
-    if "application/json" in req.headers["Content-Type"]:
+    if HttpHeaders.VAL_APPLICATION_JSON in req.headers[HttpHeaders.KEY_CONTENT_TYPE]:
         body = await req.json()
     else:
         return Response(status=HTTPStatus.UNSUPPORTED_MEDIA_TYPE)
 
     # Extract the auth headers if available
-    if "Authorization" in req.headers:
-        auth_header = req.headers["Authorization"]
+    if HttpHeaders.KEY_AUTHORIZATION in req.headers:
+        auth_header = req.headers[HttpHeaders.KEY_AUTHORIZATION]
     else:
         auth_header = ""
 
@@ -47,10 +51,10 @@ async def messages(req: Request) -> Response:
 
 # Listen for incoming requests on /api/messages
 APP = web.Application(middlewares=[aiohttp_error_middleware])
-APP.router.add_post("/api/messages", messages)
+APP.router.add_post(ROUTE, messages)
 
 if __name__ == "__main__":
     try:
-        web.run_app(APP, host="localhost", port=PORT)
+        web.run_app(APP, host=HOST, port=PORT)
     except Exception as error:
         raise error
