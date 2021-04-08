@@ -1,3 +1,10 @@
+###########################################################
+# This module provides a class for generating a basic
+# unknown skill adaptive card. The card provides a text 
+# block that lists the unknown skill.
+# 
+###########################################################
+
 # Third party imports
 from adaptivecardbuilder import ActionSubmit, TextBlock
 

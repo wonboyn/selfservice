@@ -19,7 +19,7 @@ class HelpSkillCard(BaseCard):
         super().__init__()
 
         # Get skill details
-        name = skill.getName()
+        name = skill.getSkillName()
         cat = skill.getCategory()
         desc = skill.getDesc()
 
