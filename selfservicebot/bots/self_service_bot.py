@@ -5,8 +5,8 @@
 ###########################################################
 
 # Third party imports
-from botbuilder.core import ActivityHandler, CardFactory, MessageFactory, TurnContext
-from botbuilder.schema import Activity, ActivityTypes, ChannelAccount
+from botbuilder.core import ActivityHandler, MessageFactory, TurnContext
+from botbuilder.schema import ChannelAccount
 
 # Local imports
 from cards import HelpCard, HelpSkillCard, UnknownSkillCard, WelcomeCard
@@ -34,13 +34,7 @@ class SelfServiceBot(ActivityHandler):
 
                 # Generate welcome card
                 card = WelcomeCard()
-                cardJson = await card.genCard()
-
-                # Create message to send
-                message = Activity(
-                    type = ActivityTypes.message,
-                    attachments = [CardFactory.adaptive_card(cardJson)]
-                )
+                message = await card.genMessage()
 
                 # Send response
                 await turn_context.send_activity(message)
@@ -135,13 +129,7 @@ class SelfServiceBot(ActivityHandler):
 
         # Generate adaptive card
         card = HelpCard(self._skills)
-        cardJson = await card.genCard()
-
-        # Create message
-        message = Activity(
-                type = ActivityTypes.message,
-                attachments = [CardFactory.adaptive_card(cardJson)]
-        )
+        message = await card.genMessage()
 
         # Return the message
         return message
@@ -156,19 +144,13 @@ class SelfServiceBot(ActivityHandler):
             # Generate adaptive card
             skill = self._skills[arg]
             card = HelpSkillCard(skill)
-            cardJson = await card.genCard()
+            message = await card.genMessage()
 
         else:
 
             # Unknown skills requested
             card = UnknownSkillCard(arg)
-            cardJson = await card.genCard()
-
-        # Create message
-        message = Activity(
-                type = ActivityTypes.message,
-                attachments = [CardFactory.adaptive_card(cardJson)]
-        )
+            message = await card.genMessage()
 
         # Return the message
         return message
@@ -179,13 +161,7 @@ class SelfServiceBot(ActivityHandler):
 
         # Generate unknown skill card
         card = UnknownSkillCard(skill)
-        cardJson = await card.genCard()
-
-        # Create message
-        message = Activity(
-                type = ActivityTypes.message,
-                attachments = [CardFactory.adaptive_card(cardJson)]
-        )
+        message = await card.genMessage()
 
         # Return the message
         return message

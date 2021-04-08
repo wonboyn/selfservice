@@ -32,7 +32,10 @@ class Skill:
     def getDocUrl(self):
         return self.__docurl
 
-    def getName(self):
+    def getLambdaName(self):
+        return self.__lambda_name
+
+    def getSkillName(self):
         return self.__name
 
 

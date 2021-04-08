@@ -1,3 +1,9 @@
+###########################################################
+# This module provides a class for generating a basic
+# welcome adaptive card. 
+# 
+###########################################################
+
 # Third party imports
 from adaptivecardbuilder import ActionSubmit, TextBlock
 

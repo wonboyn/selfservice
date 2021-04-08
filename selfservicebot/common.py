@@ -13,6 +13,7 @@ import traceback
 
 # Local imports
 from bots import SelfServiceBot
+from cards import ErrorCard
 from config import BotConfig
 from constants import ErrorMessages
 
@@ -35,25 +36,15 @@ ADAPTER = BotFrameworkAdapter(SETTINGS)
 # Define a Catch-all handler for errors.
 async def on_error(context: TurnContext, error: Exception):
 
-    print(f"\n [on_turn_error] unhandled error: {error}", file=sys.stderr)
-    traceback.print_exc()
+    # Log the exception
+    print(f"ERROR: {error}", file=sys.stdout)
+    traceback.print_exc(file=sys.stdout)
 
     # Send a message to the user
-    await context.send_activity(ErrorMessages.GENERAL_ERROR)
+    card = ErrorCard(ErrorMessages.GENERAL_ERROR)
+    message = await card.genMessage()
+    await context.send_activity(message)
     
-    # Send a trace activity if we're talking to the Bot Framework Emulator
-    if context.activity.channel_id == "emulator":
-
-        trace_activity = Activity(
-            label="TurnError",
-            name="on_turn_error Trace",
-            timestamp=datetime.utcnow(),
-            type=ActivityTypes.trace,
-            value=f"{error}",
-            value_type="https://www.botframework.com/schemas/error",
-        )
-        await context.send_activity(trace_activity)
-
 
 # Set the adapter to use the error handler
 ADAPTER.on_turn_error = on_error
