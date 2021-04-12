@@ -6,4 +6,7 @@
 
 class ErrorMessages:
 
+    BOT_ABORT_ERROR = "Aborting Self Service Bot"
+    BOT_INIT_ERROR = "ERROR reported during initialisation of SelfServiceBot"
+    DYNAMODB_SCAN_ERROR = "ERROR reported by DynamoDB"
     GENERAL_ERROR = "The bot encountered an error."

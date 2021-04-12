@@ -7,9 +7,11 @@
 # Third party imports
 from botbuilder.core import ActivityHandler, MessageFactory, TurnContext
 from botbuilder.schema import ChannelAccount
+import sys
 
 # Local imports
 from cards import HelpCard, HelpSkillCard, UnknownSkillCard, WelcomeCard
+from constants import ErrorMessages
 from skills import Skills
 from typing import List
 
@@ -21,7 +23,13 @@ class SelfServiceBot(ActivityHandler):
     def __init__(self):
 
         # Load skills
-        skillsObj = Skills()
+        try:
+            skillsObj = Skills()
+        except:
+            print(ErrorMessages.BOT_INIT_ERROR, file=sys.stdout)
+            raise
+
+        # Set the skills member variable
         self._skills = skillsObj.getSkills()
 
 

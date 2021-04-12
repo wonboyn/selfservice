@@ -1,4 +1,4 @@
-from .globals import AwsApiGateway, AwsDynamoDB, AwsLambda, HttpHeaders
+from .globals import AwsApiGateway, AwsDynamoDB, AwsLambda, HttpHeaders, SkillItem
 from .messages import ErrorMessages
 
-__all__ = ["AwsApiGateway", "AwsDynamoDB", "AwsLambda", "ErrorMessages", "HttpHeaders"]
+__all__ = ["AwsApiGateway", "AwsDynamoDB", "AwsLambda", "ErrorMessages", "HttpHeaders", "SkillItem"]

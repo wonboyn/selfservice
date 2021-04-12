@@ -12,6 +12,7 @@ import json
 
 
 class BaseCard():
+    """The BaseCard class is used to represent a base adaptive card."""
 
     def __init__(self):
 
@@ -19,7 +20,8 @@ class BaseCard():
         self.card.add(TextBlock("Self Service Bot", size="ExtraLarge", weight="Bolder"))
 
 
-    async def genMessage(self):
+    async def genMessage(self) -> Activity:
+        """Generate the Activity object containing the adapative card message."""
 
         # Generate the JSON object for the card
         cardJsonStr = await self.card.to_json()

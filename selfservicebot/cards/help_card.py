@@ -13,6 +13,7 @@ from cards.base_card import BaseCard
 
 
 class HelpCard(BaseCard):
+    """The HelpCard class is an extension of the BaseCard that is used for listing skills."""
 
     def __init__(self, skills):
 
