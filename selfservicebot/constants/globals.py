@@ -12,6 +12,12 @@ class AwsApiGateway:
     KEY_MSG_STATUS_CODE = "statusCode"
 
 
+class AwsDynamoDB:
+
+    DYNAMODB = "dynamodb"
+    ITEMS = "Items"
+
+
 class AwsLambda:
 
     KEY_EVENT_BODY = "body"

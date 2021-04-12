@@ -1,9 +1,12 @@
 # Third party imports
 import boto3
+from botocore import exceptions
+import sys, traceback
+from typing import Dict
 
 # Local imports
 from config import BotConfig
-from typing import Dict
+from constants import AwsDynamoDB
 
 
 # Skill class
@@ -47,15 +50,23 @@ class Skills:
         self._skills: Dict[str, Skill] = dict()
 
         # Fetch skills from DynamoDB
-        dynamodb = boto3.resource("dynamodb")
+        dynamodb = boto3.resource(AwsDynamoDB.DYNAMODB)
         table = dynamodb.Table(BotConfig.SKILLS_TABLE_NAME)
-        response = table.scan()
-        items = response['Items']
+        try:
+            response = table.scan()
+            items = response[AwsDynamoDB.ITEMS]
 
-        # Handle results pagination if necessary
-        while 'LastEvaluatedKey' in response:
-            response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-            items.extend(response['Items'])
+            # Handle results pagination if necessary
+            while 'LastEvaluatedKey' in response:
+                response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+                items.extend(response[AwsDynamoDB.ITEMS])
+
+        except exceptions.ClientError as e:
+
+            # Log the exception
+            print(f"ERROR: {e}", file=sys.stdout)
+            traceback.print_exc(file=sys.stdout)
+            sys.exit(1)
 
         # Populate SKILLS class variable
         for item in items:
