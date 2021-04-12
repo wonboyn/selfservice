@@ -76,7 +76,7 @@ class Skills:
 
         except exceptions.ClientError as e:
 
-            # Throw the exception up the line for handling
+            # Log details then throw the exception up the line for handling
             print(ErrorMessages.DYNAMODB_SCAN_ERROR, file=sys.stdout)
             traceback.print_exc(file=sys.stdout)
             raise

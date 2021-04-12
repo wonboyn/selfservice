@@ -17,7 +17,7 @@ name: Perform build & test
 on: 
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   build:
@@ -25,9 +25,9 @@ jobs:
     
     # Variables for the build job
     env:
-      dir-src: '${{ github.workspace }}/selfservicebot'
-      dir-tests: '${{ github.workspace }}/selfservicebot/tests'
-      file-requirements: '${{ github.workspace }}/requirements.txt'
+      dir-src: '${{ github.workspace }}/src'
+      dir-tests: '${{ github.workspace }}/tests'
+      file-requirements: '${{ github.workspace }}/src/requirements.txt'
     
     # Build steps
     steps:
