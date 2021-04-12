@@ -12,6 +12,7 @@ from cards.base_card import BaseCard
 
 
 class ErrorCard(BaseCard):
+    """The ErrorCard class is an extension of the BaseCard that is used for any error messages."""
 
     def __init__(self, message):
 

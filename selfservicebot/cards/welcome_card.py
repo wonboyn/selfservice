@@ -12,6 +12,7 @@ from cards.base_card import BaseCard
 
 
 class WelcomeCard(BaseCard):
+    """The HelpCard class is an extension of the BaseCard that is used for providing a welcome message."""
 
     def __init__(self):
 

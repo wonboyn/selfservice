@@ -7,7 +7,6 @@
 # Third party imports
 from botbuilder.core import BotFrameworkAdapterSettings, TurnContext, BotFrameworkAdapter
 from botbuilder.schema import Activity, ActivityTypes
-from datetime import datetime
 import sys
 import traceback
 
@@ -51,7 +50,11 @@ ADAPTER.on_turn_error = on_error
 
 
 # Create the Self Service Bot
-BOT = SelfServiceBot()
+try: 
+    BOT = SelfServiceBot()
+except:
+    print(ErrorMessages.BOT_ABORT_ERROR, file=sys.stdout)
+    sys.exit(1)
 
 
 # Setup handler for processing inbound bot requests

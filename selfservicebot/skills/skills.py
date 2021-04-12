@@ -1,3 +1,9 @@
+###########################################################
+# This module handles retrieval of skills from
+# AWS Dynamo DB.
+#
+###########################################################
+
 # Third party imports
 import boto3
 from botocore import exceptions
@@ -6,11 +12,12 @@ from typing import Dict
 
 # Local imports
 from config import BotConfig
-from constants import AwsDynamoDB
+from constants import AwsDynamoDB, ErrorMessages, SkillItem
 
 
 # Skill class
 class Skill:
+    """The skill class is used to represent a skill that can be called by the bot."""
     
     def __init__(
         self, 
@@ -26,23 +33,29 @@ class Skill:
         self.__lambda_name = lambda_name
         self.__name = name
 
-    def getCategory(self):
+    def getCategory(self) -> str:
+        """Get the category of the skill."""
         return self.__category
 
-    def getDesc(self):
+    def getDesc(self) -> str:
+        """Get the description of the skill."""
         return self.__description
 
-    def getDocUrl(self):
+    def getDocUrl(self) -> str:
+        """Get the documentation url of the skill."""
         return self.__docurl
 
-    def getLambdaName(self):
+    def getLambdaName(self) -> str:
+        """Get the AWS Lambda name of the skill."""
         return self.__lambda_name
 
-    def getSkillName(self):
+    def getSkillName(self) -> str:
+        """Get the name of the skill."""
         return self.__name
 
 
 class Skills:
+    """The skills class is used to represent all skills that can be called by the bot."""
 
     def __init__(self):
 
@@ -57,26 +70,32 @@ class Skills:
             items = response[AwsDynamoDB.ITEMS]
 
             # Handle results pagination if necessary
-            while 'LastEvaluatedKey' in response:
-                response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+            while AwsDynamoDB.LASTEVALKEY in response:
+                response = table.scan(ExclusiveStartKey=response[AwsDynamoDB.LASTEVALKEY])
                 items.extend(response[AwsDynamoDB.ITEMS])
 
         except exceptions.ClientError as e:
 
-            # Log the exception
-            print(f"ERROR: {e}", file=sys.stdout)
+            # Throw the exception up the line for handling
+            print(ErrorMessages.DYNAMODB_SCAN_ERROR, file=sys.stdout)
             traceback.print_exc(file=sys.stdout)
-            sys.exit(1)
+            raise
 
         # Populate SKILLS class variable
         for item in items:
-            name = item['name']
-            desc = item['description']
-            lambda_name = item['boturl']
-            category = item['category']
-            docurl = item['docurl']
+            
+            # Grab the attributes we need
+            category = item[SkillItem.CATEGORY]
+            desc = item[SkillItem.DESCRIPTION]
+            docurl = item[SkillItem.DOC_URL]
+            lambda_name = item[SkillItem.BOT_URL]
+            name = item[SkillItem.NAME]
+
+            # Populate the array
             skill = Skill(name, desc, category, lambda_name, docurl)
             self._skills[name] = skill
 
+
     def getSkills(self):
+        """Get all available skills."""
         return self._skills

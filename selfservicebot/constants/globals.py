@@ -16,6 +16,7 @@ class AwsDynamoDB:
 
     DYNAMODB = "dynamodb"
     ITEMS = "Items"
+    LASTEVALKEY = "LastEvaluatedKey"
 
 
 class AwsLambda:
@@ -30,3 +31,11 @@ class HttpHeaders:
     KEY_CONTENT_TYPE = "Content-Type"
     VAL_APPLICATION_JSON = "application/json"
 
+
+class SkillItem:
+
+    BOT_URL = "boturl"
+    CATEGORY = "category"
+    DESCRIPTION = "description"
+    DOC_URL = "docurl"
+    NAME = "name"
