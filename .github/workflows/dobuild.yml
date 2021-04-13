@@ -43,8 +43,10 @@ jobs:
         echo Event: ${{ github.event_name }}
         echo Git Ref: ${{ github.ref }}
         echo Git SHA: ${{ github.sha }}
-        echo Source Directory: 
+        echo Source Directory ${{ env.dir-src }}: 
         ls -al ${{ env.dir-src }}
+        echo Test Directory ${{ env.dir-tests }}: 
+        ls -al ${{ env.dir-tests }}
     
     # Setup Python
     - name: Setup Python
@@ -68,15 +70,15 @@ jobs:
     - name: Install runtime dependencies
       run: |
         pip3 install --target=${{ env.dir-src }} -r ${{ env.file-run-reqs }}
-        echo Source Directory: 
+        echo Source Directory ${{ env.dir-src }}: 
         ls -al ${{ env.dir-src }}
     
     # Install the test dependencies
     - name: Install test dependencies
       run: |
         pip3 install --target=${{ env.dir-tests }} -r ${{ env.file-test-reqs }}
-        echo Source Directory: 
-        ls -al ${{ env.dir-src }}
+        echo Test Directory ${{ env.dir-tests }}: 
+        ls -al ${{ env.dir-tests }}
     
     # Run the tests
     # TODO!!!
