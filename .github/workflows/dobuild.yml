@@ -27,7 +27,8 @@ jobs:
     env:
       dir-src: '${{ github.workspace }}/src'
       dir-tests: '${{ github.workspace }}/tests'
-      file-requirements: '${{ github.workspace }}/src/requirements.txt'
+      file-run-reqs: '${{ github.workspace }}/src/requirements.txt'
+      file-test-reqs: '${{ github.workspace }}/tests/test_requirements.txt'
     
     # Build steps
     steps:
@@ -63,14 +64,19 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
     
-    # Install the dependencies
-    - name: Install dependencies
+    # Install the runtime dependencies
+    - name: Install runtime dependencies
       run: |
-        pip3 install --target=${{ env.dir-src }} -r ${{ env.file-requirements }}
+        pip3 install --target=${{ env.dir-src }} -r ${{ env.file-run-reqs }}
         echo Source Directory: 
         ls -al ${{ env.dir-src }}
-        echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
-        echo CODEQL_PYTHON: $CODEQL_PYTHON
+    
+    # Install the test dependencies
+    - name: Install test dependencies
+      run: |
+        pip3 install --target=${{ env.dir-tests }} -r ${{ env.file-test-reqs }}
+        echo Source Directory: 
+        ls -al ${{ env.dir-src }}
     
     # Run the tests
     # TODO!!!
