@@ -6,7 +6,7 @@
 
 # Third party imports
 import boto3
-from botocore import exceptions
+from botocore.exceptions import ClientError
 import sys, traceback
 from typing import Dict
 
@@ -74,7 +74,7 @@ class Skills:
                 response = table.scan(ExclusiveStartKey=response[AwsDynamoDB.LASTEVALKEY])
                 items.extend(response[AwsDynamoDB.ITEMS])
 
-        except exceptions.ClientError as e:
+        except ClientError as e:
 
             # Log details then throw the exception up the line for handling
             print(ErrorMessages.DYNAMODB_SCAN_ERROR, file=sys.stdout)
