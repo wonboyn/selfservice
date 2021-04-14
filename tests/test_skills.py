@@ -11,11 +11,20 @@ from src.skills import Skills
 
 
 ###
-# Test missing skills table
+# Test skills table missing
 ###
-def test_missing_table(dynamodb_client):
+def test_table_missing(dynamodb_client):
 
     try:
         Skills()
     except ClientError as err:
         assert err.response['Error']['Code'] == "ResourceNotFoundException"
+
+
+###
+# Test skills table exists
+###
+def test_table_exists(dynamodb_create_skills_table):
+
+    skills = Skills()
+    assert skills is not None

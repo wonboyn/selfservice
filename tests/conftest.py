@@ -37,10 +37,10 @@ def dynamodb_client(aws_credentials):
 # Fixture to create skills table
 ###
 @pytest.fixture(scope='function')
-def dynamodb_skills_table(dynamodb_client):
+def dynamodb_create_skills_table(dynamodb_client):
 
     # Create the table
-    table = dynamodb.create_table(
+    table = dynamodb_client.create_table(
         TableName='skills',
         KeySchema=[
             {
@@ -65,5 +65,5 @@ def dynamodb_skills_table(dynamodb_client):
         BillingMode='PAY_PER_REQUEST'
     )
     
-    table.meta.client.get_waiter('table_exists').wait(TableName='surveys')
+    table.meta.client.get_waiter('table_exists').wait(TableName='skills')
     yield
