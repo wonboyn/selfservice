@@ -84,7 +84,7 @@ jobs:
     - name: Run unit tests
       run: |
         cd ${{ env.dir-src }}
-        python -m pyest ${{ env.dir-tests }}
+        python -m pytest ${{ env.dir-tests }}
 
     # Upload artefact
     - name: Upload artefact
