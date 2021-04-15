@@ -10,6 +10,7 @@ from botbuilder.schema import ChannelAccount
 import sys
 
 # Local imports
+from botocore.exceptions import ClientError
 from cards import HelpCard, HelpSkillCard, UnknownSkillCard, WelcomeCard
 from constants import ErrorMessages
 from skills import Skills
@@ -25,7 +26,7 @@ class SelfServiceBot(ActivityHandler):
         # Load skills
         try:
             skillsObj = Skills()
-        except:
+        except ClientError:
             print(ErrorMessages.BOT_INIT_ERROR, file=sys.stdout)
             raise
 
