@@ -10,5 +10,4 @@ class BotConfig:
 
     APP_ID = os.environ.get("MicrosoftAppId", "")
     APP_PASSWORD = os.environ.get("MicrosoftAppPassword", "")
-    #SKILLS_TABLE_NAME = "skills"
-    SKILLS_TABLE_NAME = "fred"
+    SKILLS_TABLE_NAME = "skills"
