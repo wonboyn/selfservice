@@ -9,10 +9,36 @@ import boto3
 from moto import mock_dynamodb2
 import os
 import pytest
+from typing import Dict
+
+# Local imports
+from src.skills import Skill
 
 
 ###
-# Fixture to setup dummy credentials
+# Fixture to return nothing
+###
+@pytest.fixture(scope='function')
+def gen_none():
+    """Generate nothing!."""
+    return None
+
+
+###
+# Fixture to generate a dictionary of skills
+###
+@pytest.fixture(scope='function')
+def gen_skills_dict():
+    """Generate a dictionary of skill objects."""
+
+    skills = dict()
+    skill = Skill("test", "test", "test", "test", "https://somewhere.org/test")
+    skills["test"] = skill
+    return skills
+
+
+###
+# Fixture to setup dummy AWS credentials
 ###
 @pytest.fixture(scope='function')
 def mock_aws_credentials():
@@ -36,7 +62,7 @@ def mock_dynamodb_client(mock_aws_credentials):
 
 
 ###
-# Fixture to create skills table
+# Fixture to create skills table in DynamoDB
 ###
 @pytest.fixture(scope='function')
 def mock_dynamodb_skills_table(mock_dynamodb_client):

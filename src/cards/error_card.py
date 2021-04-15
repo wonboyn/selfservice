@@ -9,6 +9,7 @@ from adaptivecardbuilder import TextBlock
 
 # Local imports
 from cards.base_card import BaseCard
+from constants import ErrorMessages
 
 
 class ErrorCard(BaseCard):
@@ -16,5 +17,10 @@ class ErrorCard(BaseCard):
 
     def __init__(self, message):
 
+        # Sanity check
+        if not message:
+            raise Exception(ErrorMessages.MISSING_PARAM_ERROR)
+
+        # Setup the card
         super().__init__()
         self.card.add(TextBlock(message, size="small"))

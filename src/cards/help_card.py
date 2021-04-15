@@ -10,6 +10,7 @@ from adaptivecardbuilder import ActionSet, ActionSubmit, Column, ColumnSet, Text
 
 # Local imports
 from cards.base_card import BaseCard
+from constants import ErrorMessages
 
 
 class HelpCard(BaseCard):
@@ -17,6 +18,11 @@ class HelpCard(BaseCard):
 
     def __init__(self, skills):
 
+        # Sanity check
+        if not skills:
+            raise Exception(ErrorMessages.MISSING_SKILLS_OBJ_ERROR)
+
+        # Setup the card
         super().__init__()
         self.card.add(TextBlock("The following skills are available.", size="small"))
 
