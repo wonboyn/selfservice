@@ -17,7 +17,7 @@ name: Perform build & test
 on: 
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   build:
@@ -25,10 +25,10 @@ jobs:
     
     # Variables for the build job
     env:
-      dir-src: '${{ github.workspace }}/selfservicebot'
-      dir-tests: '${{ github.workspace }}/selfservicebot/tests'
+      dir-src: '${{ github.workspace }}/src'
+      dir-tests: '${{ github.workspace }}/tests'
       file-requirements: '${{ github.workspace }}/requirements.txt'
-    
+
     # Build steps
     steps:
     
@@ -42,8 +42,10 @@ jobs:
         echo Event: ${{ github.event_name }}
         echo Git Ref: ${{ github.ref }}
         echo Git SHA: ${{ github.sha }}
-        echo Source Directory: 
+        echo Source Directory ${{ env.dir-src }}: 
         ls -al ${{ env.dir-src }}
+        echo Test Directory ${{ env.dir-tests }}: 
+        ls -al ${{ env.dir-tests }}
     
     # Setup Python
     - name: Setup Python
@@ -67,14 +69,15 @@ jobs:
     - name: Install dependencies
       run: |
         pip3 install --target=${{ env.dir-src }} -r ${{ env.file-requirements }}
-        echo Source Directory: 
+        echo Source Directory ${{ env.dir-src }}: 
         ls -al ${{ env.dir-src }}
-        echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
-        echo CODEQL_PYTHON: $CODEQL_PYTHON
     
     # Run the tests
-    # TODO!!!
-    
+    - name: Run unit tests
+      run: |
+        cd ${{ env.dir-src }}
+        python -m pytest ${{ env.dir-tests }}
+
     # Upload artefact
     - name: Upload artefact
       uses: actions/upload-artifact@v2
@@ -83,4 +86,3 @@ jobs:
         path: |
           ${{ env.dir-src }}
           !${{ env.dir-tests }}
-

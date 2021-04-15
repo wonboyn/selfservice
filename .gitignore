@@ -9,12 +9,8 @@
 # Python
 __pycache__/
 
-# Terraform
-/.terraform/*
-.terraform.lock*
-*.terraform/
-*.tfstate
-*.tfstate.backup
-
 # VS Code
 .vscode
+
+# Pycharm
+.idea
