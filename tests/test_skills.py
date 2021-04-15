@@ -13,7 +13,7 @@ from src.skills import Skills
 ###
 # Test skills table missing
 ###
-def test_table_missing(dynamodb_client):
+def test_table_missing(mock_dynamodb_client):
 
     try:
         Skills()
@@ -24,7 +24,7 @@ def test_table_missing(dynamodb_client):
 ###
 # Test skills table exists
 ###
-def test_table_exists(dynamodb_create_skills_table):
+def test_table_exists(mock_dynamodb_skills_table):
 
     skills = Skills()
     assert skills is not None
