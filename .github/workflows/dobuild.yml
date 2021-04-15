@@ -81,8 +81,11 @@ jobs:
         ls -al ${{ env.dir-tests }}
     
     # Run the tests
-    # TODO!!!
-    
+    - name: Run unit tests
+      run: |
+        cd ${{ env.dir-src }}
+        python -m pyest ${{ env.dir-tests }}
+
     # Upload artefact
     - name: Upload artefact
       uses: actions/upload-artifact@v2
